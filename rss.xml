@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+
+
+
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Jiajun&#39;s Blog</title>
+        <link>http://localhost:2037/</link>
+        <description>This is Jiajun&#39;s blog.</description>
+        <generator>Hugo 0.145.0 https://gohugo.io/</generator>
+        
+            <language>zh-CN</language>
+        
+        
+            <managingEditor>ofjiajun@gmail.com (Jiajun)</managingEditor>
+        
+        
+            <webMaster>ofjiajun@gmail.com (Jiajun)</webMaster>
+        
+        
+            <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+        
+        <lastBuildDate>Tue, 22 Jul 2025 18:51:18 &#43;0800</lastBuildDate>
+        
+            <atom:link rel="self" type="application/rss&#43;xml" href="http://localhost:2037/rss.xml" />
+        
+        
+            <item>
+                <title>hello world</title>
+                <link>http://localhost:2037/posts/hello-world/</link>
+                <guid isPermaLink="true">http://localhost:2037/posts/hello-world/</guid>
+                <pubDate>Wed, 09 Apr 2025 14:30:22 &#43;0800</pubDate>
+                
+                    <author>ofjiajun@gmail.com (Jiajun)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                <description></description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
+        
+    </channel>
+</rss>
