@@ -2,34 +2,35 @@
 
 
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
-    <title type="text">Jiajun&#39;s Blog</title>
+    <title type="text">Jiajun Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s blog.</subtitle>
-    <updated>2025-07-22T18:51:18&#43;08:00</updated>
-    <id>http://localhost:2037/</id>
-    <link rel="alternate" type="text/html" href="http://localhost:2037/" />
-    <link rel="self" type="application/atom&#43;xml" href="http://localhost:2037/atom.xml" />
+    <updated>2025-07-22T20:50:16&#43;08:00</updated>
+    <id>http://localhost:6100/</id>
+    <link rel="alternate" type="text/html" href="http://localhost:6100/" />
+    <link rel="self" type="application/atom&#43;xml" href="http://localhost:6100/atom.xml" />
     <author>
             <name>Jiajun</name>
-            <uri>http://localhost:2037/</uri>
+            <uri>http://localhost:6100/</uri>
             
                 <email>ofjiajun@gmail.com</email>
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
         <entry>
-            <title type="text">hello world</title>
-            <link rel="alternate" type="text/html" href="http://localhost:2037/posts/hello-world/" />
-            <id>http://localhost:2037/posts/hello-world/</id>
-            <updated>2025-04-09T16:08:37&#43;08:00</updated>
-            <published>2025-04-09T14:30:22&#43;08:00</published>
+            <title type="text">Preface</title>
+            <link rel="alternate" type="text/html" href="http://localhost:6100/post/post1/" />
+            <id>http://localhost:6100/post/post1/</id>
+            <updated>2025-07-22T20:42:36&#43;08:00</updated>
+            <published>2025-07-22T20:23:27&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html"></summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">Get started</summary>
             
-                <content type="html"></content>
+                <content type="html">&lt;p&gt;梗概千篇一律，叙事独具匠心。&lt;/p&gt;
+</content>
             
             
             
@@ -37,7 +38,23 @@
             
                 
                     
+                        
+                            
+                            
+                            
+                                <category scheme="http://localhost:6100/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
+                            
+                        
+                    
                 
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="http://localhost:6100/tags/none/" term="None" label="None" />
+                            
+                        
                     
                 
             

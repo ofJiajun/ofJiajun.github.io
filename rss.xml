@@ -7,8 +7,8 @@
 
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Jiajun&#39;s Blog</title>
-        <link>http://localhost:2037/</link>
+        <title>Jiajun Blah Blah</title>
+        <link>http://localhost:6100/</link>
         <description>This is Jiajun&#39;s blog.</description>
         <generator>Hugo 0.145.0 https://gohugo.io/</generator>
         
@@ -23,21 +23,22 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Tue, 22 Jul 2025 18:51:18 &#43;0800</lastBuildDate>
+        <lastBuildDate>Tue, 22 Jul 2025 20:50:16 &#43;0800</lastBuildDate>
         
-            <atom:link rel="self" type="application/rss&#43;xml" href="http://localhost:2037/rss.xml" />
+            <atom:link rel="self" type="application/rss&#43;xml" href="http://localhost:6100/rss.xml" />
         
         
             <item>
-                <title>hello world</title>
-                <link>http://localhost:2037/posts/hello-world/</link>
-                <guid isPermaLink="true">http://localhost:2037/posts/hello-world/</guid>
-                <pubDate>Wed, 09 Apr 2025 14:30:22 &#43;0800</pubDate>
+                <title>Preface</title>
+                <link>http://localhost:6100/post/post1/</link>
+                <guid isPermaLink="true">http://localhost:6100/post/post1/</guid>
+                <pubDate>Tue, 22 Jul 2025 20:23:27 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                <description></description>
+                <description>&lt;p&gt;梗概千篇一律，叙事独具匠心。&lt;/p&gt;
+</description>
                 
                 
                 
@@ -45,7 +46,23 @@
                 
                     
                         
+                            
+                                
+                                
+                                
+                                    <category domain="http://localhost:6100/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
+                                
+                            
+                        
                     
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="http://localhost:6100/tags/none/">None</category>
+                                
+                            
                         
                     
                 
