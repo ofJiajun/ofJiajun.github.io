@@ -4,13 +4,13 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">Jiajun Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s blog.</subtitle>
-    <updated>2025-07-23T16:28:16&#43;08:00</updated>
-    <id>https://www.jjyyblahblah.xyz/</id>
-    <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/" />
-    <link rel="self" type="application/atom&#43;xml" href="https://www.jjyyblahblah.xyz/atom.xml" />
+    <updated>2025-07-23T17:42:47&#43;08:00</updated>
+    <id>http://localhost:9781/</id>
+    <link rel="alternate" type="text/html" href="http://localhost:9781/" />
+    <link rel="self" type="application/atom&#43;xml" href="http://localhost:9781/atom.xml" />
     <author>
             <name>Jiajun</name>
-            <uri>https://www.jjyyblahblah.xyz/</uri>
+            <uri>http://localhost:9781/</uri>
             
                 <email>ofjiajun@gmail.com</email>
             </author>
@@ -18,8 +18,8 @@
     <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
         <entry>
             <title type="text">May 8, 2025</title>
-            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/post/post2/" />
-            <id>https://www.jjyyblahblah.xyz/post/post2/</id>
+            <link rel="alternate" type="text/html" href="http://localhost:9781/post/post2/" />
+            <id>http://localhost:9781/post/post2/</id>
             <updated>2025-07-23T16:25:09&#43;08:00</updated>
             <published>2025-07-23T16:22:54&#43;08:00</published>
             <author>
@@ -47,7 +47,7 @@
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
+                                <category scheme="http://localhost:9781/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
                             
                         
                     
@@ -57,7 +57,7 @@
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/none/" term="None" label="None" />
+                                <category scheme="http://localhost:9781/tags/none/" term="None" label="None" />
                             
                         
                     
@@ -67,8 +67,8 @@
     
         <entry>
             <title type="text">Preface</title>
-            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/post/post1/" />
-            <id>https://www.jjyyblahblah.xyz/post/post1/</id>
+            <link rel="alternate" type="text/html" href="http://localhost:9781/post/post1/" />
+            <id>http://localhost:9781/post/post1/</id>
             <updated>2025-07-23T16:20:20&#43;08:00</updated>
             <published>2025-07-22T20:23:27&#43;08:00</published>
             <author>
@@ -91,7 +91,7 @@
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
+                                <category scheme="http://localhost:9781/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
                             
                         
                     
@@ -101,7 +101,7 @@
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/none/" term="None" label="None" />
+                                <category scheme="http://localhost:9781/tags/none/" term="None" label="None" />
                             
                         
                     
