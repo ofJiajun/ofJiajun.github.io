@@ -8,8 +8,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
         <title>Jiajun Blah Blah</title>
-        <link>http://localhost:9781/</link>
-        <description>This is Jiajun&#39;s blog.</description>
+        <link>https://www.jjyyblahblah.xyz/</link>
+        <description>This is Jiajun&#39;s Blog.</description>
         <generator>Hugo 0.145.0 https://gohugo.io/</generator>
         
             <language>zh-CN</language>
@@ -23,15 +23,15 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Wed, 23 Jul 2025 17:42:47 &#43;0800</lastBuildDate>
+        <lastBuildDate>Wed, 23 Jul 2025 18:52:09 &#43;0800</lastBuildDate>
         
-            <atom:link rel="self" type="application/rss&#43;xml" href="http://localhost:9781/rss.xml" />
+            <atom:link rel="self" type="application/rss&#43;xml" href="https://www.jjyyblahblah.xyz/rss.xml" />
         
         
             <item>
                 <title>May 8, 2025</title>
-                <link>http://localhost:9781/post/post2/</link>
-                <guid isPermaLink="true">http://localhost:9781/post/post2/</guid>
+                <link>https://www.jjyyblahblah.xyz/posts/post2/</link>
+                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post2/</guid>
                 <pubDate>Wed, 23 Jul 2025 16:22:54 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
@@ -55,7 +55,7 @@
                                 
                                 
                                 
-                                    <category domain="http://localhost:9781/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
+                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
                                 
                             
                         
@@ -65,7 +65,7 @@
                                 
                                 
                                 
-                                    <category domain="http://localhost:9781/tags/none/">None</category>
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/none/">None</category>
                                 
                             
                         
@@ -75,8 +75,8 @@
         
             <item>
                 <title>Preface</title>
-                <link>http://localhost:9781/post/post1/</link>
-                <guid isPermaLink="true">http://localhost:9781/post/post1/</guid>
+                <link>https://www.jjyyblahblah.xyz/posts/post1/</link>
+                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post1/</guid>
                 <pubDate>Tue, 22 Jul 2025 20:23:27 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
@@ -95,7 +95,7 @@
                                 
                                 
                                 
-                                    <category domain="http://localhost:9781/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
+                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
                                 
                             
                         
@@ -105,7 +105,7 @@
                                 
                                 
                                 
-                                    <category domain="http://localhost:9781/tags/none/">None</category>
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/none/">None</category>
                                 
                             
                         
