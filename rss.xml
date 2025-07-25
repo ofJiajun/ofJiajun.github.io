@@ -23,10 +23,188 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 24 Jul 2025 19:43:40 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 25 Jul 2025 16:04:38 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://www.jjyyblahblah.xyz/rss.xml" />
         
+        
+            <item>
+                <title>在 Windows 上配置 LLVM工具链——Clang &#43; LLDB</title>
+                <link>https://www.jjyyblahblah.xyz/posts/post2/</link>
+                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post2/</guid>
+                <pubDate>Fri, 25 Jul 2025 15:07:02 &#43;0800</pubDate>
+                
+                    <author>ofjiajun@gmail.com (Jiajun)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                <description>&lt;p&gt;本文概述如何在 Windows11 上配置 LLVM ，从而在 Windows 平台上启用 Clang + LLDB 的编译调适工具链。&lt;/p&gt;
+&lt;p&gt;操作的平台（供参考）：Windows 11 24H2 (AMD64) build 26100.4351&lt;/p&gt;
+&lt;h2&gt;下载&lt;/h2&gt;
+&lt;p&gt;下载 LLVM 请访问&lt;a href=&#34;https://releases.llvm.org/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;官网下载页&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;安装&lt;/h2&gt;
+&lt;h3&gt;Case 1&lt;/h3&gt;
+&lt;p&gt;如果下载的是 &lt;code&gt;*.exe&lt;/code&gt; 安装包，如&lt;br&gt;
+&lt;strong&gt;LLVM-20.1.0-win64.exe&lt;/strong&gt;，可直接打开，按照向导只是安装。安装结束后，程序会为您配置必要的环境变量。&lt;/p&gt;
+&lt;p&gt;检查安装可打开 cmd 或 powershell ，键入&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;clang --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;和&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;clang++ --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;预期将正常显示版本信息。&lt;/p&gt;
+&lt;h3&gt;Case 2&lt;/h3&gt;
+&lt;p&gt;如果下载的是二进制压缩存档，如&lt;br&gt;
+&lt;em&gt;clang+llvm-20.1.0-x86_64-pc-windows-msvc.tar.xz&lt;/em&gt;，应首先将之解压到一个您中意的目录下，然后手动配置环境变量。&lt;/p&gt;
+&lt;p&gt;配置环境变量的方式如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Windowx + r键入&lt;br&gt;
+&lt;code&gt;sysdm.cpl&lt;/code&gt;&lt;br&gt;
+，选择&lt;br&gt;
+&lt;code&gt;Advanced tab&lt;/code&gt; （高级选项卡）&lt;br&gt;
+，定位到&lt;br&gt;
+&lt;code&gt;Environment Variables...&lt;/code&gt; （环境变量）&lt;br&gt;
+。&lt;/li&gt;
+&lt;li&gt;在打开的环境变量配置窗口中，找到&lt;br&gt;
+&lt;code&gt;System variables&lt;/code&gt; （系统变量）&lt;br&gt;
+列表中的&lt;br&gt;
+&lt;code&gt;Path&lt;/code&gt;&lt;br&gt;
+项目，双击该项目。&lt;/li&gt;
+&lt;li&gt;在 Path 的路径列表中新增一条，指向您解压的 LLVM 文件夹中的 bin 目录，如
+&lt;code&gt;d:\LLVM\bin&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;完成后一路点击  OK 即可。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;现在，打开 cmd 或 powershell 终端，输入&lt;br&gt;
+&lt;code&gt;clang --version&lt;/code&gt;&lt;br&gt;
+和&lt;br&gt;
+&lt;code&gt;clang++ --version&lt;/code&gt;&lt;br&gt;
+，应该可以正常输出对应的版本信息。&lt;/p&gt;
+&lt;h2&gt;配置 LLDB&lt;/h2&gt;
+&lt;p&gt;LLDB 的可执行文件 &lt;code&gt;lldb.exe&lt;/code&gt; 实际上就位于 &lt;code&gt;clang.exe&lt;/code&gt; 和 &lt;code&gt;clang++.exe&lt;/code&gt; 的同目录下，但直接在 cmd 或 powershell 中键入&lt;br&gt;
+&lt;code&gt;lldb --version&lt;/code&gt;&lt;br&gt;
+您可能不会看到预期的版本输出。然而，假设&lt;br&gt;
+&lt;code&gt;lldb --version&lt;/code&gt;&lt;br&gt;
+正常输出了版本信息，以下的配置就可以省略。因此，后续操作建立在 LLDB无法如期运行的基础上。&lt;/p&gt;
+&lt;p&gt;LLDB 的正常工作依赖 &lt;code&gt;python310.dll&lt;/code&gt; ，因此，如果 LLDB 无法在 环境变量中找到 &lt;code&gt;python310.dll&lt;/code&gt; 类似以下的报错就是可预料的：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;由于找不到 python310.dll，无法继续执行代码。重新安装程序可能会解决此问题。 
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3&gt;方案 1&lt;/h3&gt;
+&lt;p&gt;解决该问题最直接的方法是，首先安装&lt;br&gt;
+&lt;code&gt;Python3.10&lt;/code&gt;&lt;br&gt;
+，然后将 包含&lt;br&gt;
+&lt;code&gt;python310.dll&lt;/code&gt;&lt;br&gt;
+的目录，通常就是 python.exe 可执行文件所在的目录，添加到&lt;br&gt;
+&lt;code&gt;Path&lt;/code&gt; 环境变量中。&lt;/p&gt;
+&lt;p&gt;然后在&lt;br&gt;
+&lt;code&gt;System variables&lt;/code&gt; 列表中新增一项。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;key 设为 PYTHONPATH
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;value 设为 path/to/your_python_path/lib
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;这个 &lt;code&gt;lib&lt;/code&gt; 目录，通常在 &lt;code&gt;python.exe&lt;/code&gt; 的同一级文件夹中。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;书里一下目录关系&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-txt&#34; data-lang=&#34;txt&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;假设 PYTHONHOME 是 python 安装目录
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;PYTHONHOME 目录下包含 lib , python310.dll , python.exe ……
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;在 环境变量的系统变量列表中添加项目，键为 PYTHONPATH ，值为 PYTHONHOME/lib
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;然后将 PYTHONHOME 添加到 系统变量的 Path 中
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3&gt;方案 2&lt;/h3&gt;
+&lt;p&gt;如果系统中存在多个 Python 版本，比如使用 pyenv ， Miniconda ，方案 1 的措施可能引起不必要的混乱。&lt;/p&gt;
+&lt;p&gt;有鉴于此，可以采取如下方式，将 LLDB 的 Python 依赖与环境变量隔绝开来。&lt;/p&gt;
+&lt;p&gt;先决条件，无论使用什么方式，系统中必须存在 Python3.10 的设施，&lt;br&gt;
+也就是 python310.dll 以及宇之对应的 lib 目录。&lt;/p&gt;
+&lt;p&gt;以行文当下的系统为例， Python3.10 已经通过 pyenv 安装到&lt;br&gt;
+&lt;code&gt;C:\Users\username\.pyenv\pyenv-win\versions\3.10.11&lt;/code&gt; 。为便于叙述，我们把这个目录称为 PYTHON ，则&lt;br&gt;
+python310.dll&lt;br&gt;
+的位置为&lt;br&gt;
+&lt;code&gt;PYTHON\python310.dll&lt;/code&gt;&lt;br&gt;
+， lib 目录的位置为&lt;br&gt;
+&lt;code&gt;PYTHON\lib&lt;/code&gt; 。&lt;/p&gt;
+&lt;p&gt;注意，在后续设置中，请将 PYTHON 更换为实际的目录路径。&lt;/p&gt;
+&lt;p&gt;第一步，打开 cmd 终端，定位到 lldb.exe 所在的目录，比如&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;C:
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;cd &lt;span class=&#34;s2&#34;&gt;&amp;#34;C:\Program Files\llvm\bin&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;第二部，在该目录下使用&lt;br&gt;
+&lt;code&gt;mklink&lt;/code&gt;&lt;br&gt;
+分别为 &lt;code&gt;PYTHON\python310.dll&lt;/code&gt; 和 &lt;code&gt;PYTHON\lib&lt;/code&gt; 创建链接。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;mklink &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\python310.dll&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;PYTHON\python310.dll&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;symbolic link created for .\python310.dll &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&amp;lt;===&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; C:\Users\username\.pyenv\pyenv-win\versions\3.10.11\python310.dll
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;mklink /j &lt;span class=&#34;s2&#34;&gt;&amp;#34;.\lib&amp;#34;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;PYTHON\lib&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Junction created for .\lib &lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&amp;lt;===&lt;span class=&#34;p&#34;&gt;&amp;gt;&amp;gt;&lt;/span&gt; C:\Users\username\.pyenv\pyenv-win\versions\3.10.11\lib
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;假设  &lt;code&gt;mklink&lt;/code&gt; 指令顺利执行，该目录下应该慧新增 &lt;code&gt;lib&lt;/code&gt; 文件夹和 &lt;code&gt;python310.dll&lt;/code&gt; 文件。&lt;/p&gt;
+&lt;p&gt;如果 &lt;code&gt;mklink&lt;/code&gt; 不能顺利创建链接，可使用 Administrator 权限重启 cmd 后重试。&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;至此， LLVM 的配置已全部完成。如需检测安装，可以在终端中执行以下三条指令查看对应的软件版本：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;clang --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;clang++ --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;lldb --version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;输出如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;clang --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;clang version 20.1.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Target: x86_64-pc-windows-msvc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Thread model: posix
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;InstalledDir: C:\Program Files\llvm\bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;clang++ --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;clang version 20.1.0
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Target: x86_64-pc-windows-msvc
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;Thread model: posix
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;InstalledDir: C:\Program Files\llvm\bin
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;lldb --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lldb version 20.1.0
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;End&lt;/p&gt;
+</description>
+                
+                
+                
+                
+                
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
+                                
+                            
+                        
+                    
+                        
+                            
+                                
+                                
+                                
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/llvm/">llvm</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/clang/">clang</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/clang-/">clang&#43;&#43;</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/lldb/">lldb</category>
+                                
+                            
+                                
+                                
+                                
+                                    <category domain="https://www.jjyyblahblah.xyz/tags/python/">python</category>
+                                
+                            
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>Preface</title>
