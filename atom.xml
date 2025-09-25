@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">Jiajun Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s Blog.</subtitle>
-    <updated>2025-07-25T16:04:38&#43;08:00</updated>
+    <updated>2025-09-25T20:52:06&#43;08:00</updated>
     <id>https://www.jjyyblahblah.xyz/</id>
     <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/" />
     <link rel="self" type="application/atom&#43;xml" href="https://www.jjyyblahblah.xyz/atom.xml" />
@@ -17,10 +17,156 @@
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
         <entry>
+            <title type="text"></title>
+            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/posts/post3/" />
+            <id>https://www.jjyyblahblah.xyz/posts/post3/</id>
+            <updated>2025-09-25T20:38:39&#43;08:00</updated>
+            <published>2025-09-25T20:30:25&#43;08:00</published>
+            <author>
+                    <name>Jiajun</name>
+                    <uri>https://ofjiajun.github.io/</uri>
+                    <email>ofjiajun@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            
+                <content type="html">&lt;p&gt;在利用 .NET MAUI 攒 UI 时，利用列表控件如 ListView 和 CollectionView 项目绑定数据模型是很常见的操作。只不过，直接应用的数据模板对屏幕阅读器用户并不友好（至少不是所有平台都友好），比如下面的 Page：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-xaml&#34; data-lang=&#34;xaml&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34; ?&amp;gt;
+ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34;
+             xmlns:x=&amp;#34;http://schemas.microsoft.com/winfx/2009/xaml&amp;#34;
+             x:Class=&amp;#34;TeaSea.Pages.PodcastPage&amp;#34;
+             Title=&amp;#34;Podcast&amp;#34;&amp;gt;
+
+    &amp;lt;VerticalStackLayout&amp;gt;
+        &amp;lt;CollectionView x:Name=&amp;#34;podcastCollection&amp;#34;
+                        ItemsSource=&amp;#34;{Binding Podcasts}&amp;#34;&amp;gt;
+            &amp;lt;CollectionView.ItemTemplate&amp;gt;
+                &amp;lt;DataTemplate&amp;gt;
+                    &amp;lt;Grid x:Name=&amp;#34;podcastGrid&amp;#34;
+                          ColumnDefinitions=&amp;#34;*,*,*&amp;#34;&amp;gt;
+
+                        &amp;lt;Label Text=&amp;#34;{Binding Name}&amp;#34;/&amp;gt;
+                        &amp;lt;Label Text=&amp;#34;{Binding Description}&amp;#34;
+                               Grid.Column=&amp;#34;1&amp;#34;/&amp;gt;
+                        &amp;lt;Label Text=&amp;#34;{Binding UpdatedTime}&amp;#34;
+                               Grid.Column=&amp;#34;2&amp;#34;/&amp;gt;
+                    &amp;lt;/Grid&amp;gt;
+                &amp;lt;/DataTemplate&amp;gt;
+            &amp;lt;/CollectionView.ItemTemplate&amp;gt;
+        &amp;lt;/CollectionView&amp;gt;
+    &amp;lt;/VerticalStackLayout&amp;gt;
+&amp;lt;/ContentPage&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;以上的 Page 在 Android 端辅助技术，如 Talkback ，看来工作良好，但 Windows 端则不然。&lt;/p&gt;
+&lt;p&gt;的确，假设 CollectionView 中有数据项，键盘用户利用上下箭头可以在各个数据间浏览，，但，屏幕阅读器如（这里指的是 NVDA ）不会朗读项目绑定的数据属性，如 Name / Description / UpdatedTime ，而是将导航到的所有项目都报读为&lt;br&gt;
+&lt;code&gt;Microsoft.Maui.Controls.Platform.ItemTemplateContext&lt;/code&gt; 。要获取每个项的具体数据不是不可能，但需要使用 NVDA 的对象浏览模式，进入每一个数据项的子对象。但，这并不符合屏幕阅读器用户与列表控件交互的习惯。理想情况下，辅助技术用户应该可以直接获取列表内每一项的具体信息，而不是进一步浏览列表项的子节点。&lt;/p&gt;
+&lt;p&gt;这里给出一种行之有效的优化方案，代码如下：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-xaml&#34; data-lang=&#34;xaml&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34; ?&amp;gt;
+&amp;lt;ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34;
+             xmlns:x=&amp;#34;http://schemas.microsoft.com/winfx/2009/xaml&amp;#34;
+             x:Class=&amp;#34;TeaSea.Pages.PodcastPage&amp;#34;
+             Title=&amp;#34;Podcast&amp;#34;&amp;gt;
+
+    &amp;lt;VerticalStackLayout&amp;gt;
+        &amp;lt;CollectionView x:Name=&amp;#34;podcastCollection&amp;#34;
+                        ItemsSource=&amp;#34;{Binding Podcasts}&amp;#34;&amp;gt;
+            &amp;lt;CollectionView.ItemTemplate&amp;gt;
+                &amp;lt;DataTemplate&amp;gt;
+                    &amp;lt;Grid x:Name=&amp;#34;podcastGrid&amp;#34;
+                          ColumnDefinitions=&amp;#34;*,*,*&amp;#34;&amp;gt;
+
+                        &amp;lt;SemanticProperties.Description&amp;gt;
+                            &amp;lt;MultiBinding StringFormat=&amp;#34;{}{0}；{1}；修改时间：{2}&amp;#34;&amp;gt;
+                                &amp;lt;Binding Path=&amp;#34;Name&amp;#34;/&amp;gt;
+                                &amp;lt;Binding Path=&amp;#34;Description&amp;#34;/&amp;gt;
+                                &amp;lt;Binding Path=&amp;#34;UpdatedTime&amp;#34;/&amp;gt;
+                            &amp;lt;/MultiBinding&amp;gt;
+                        &amp;lt;/SemanticProperties.Description&amp;gt;
+
+                        &amp;lt;Label Text=&amp;#34;{Binding Name}&amp;#34;/&amp;gt;
+                        &amp;lt;Label Text=&amp;#34;{Binding Description}&amp;#34;
+                               Grid.Column=&amp;#34;1&amp;#34;/&amp;gt;
+                        &amp;lt;Label Text=&amp;#34;{Binding UpdatedTime}&amp;#34;
+                               Grid.Column=&amp;#34;2&amp;#34;/&amp;gt;
+                    &amp;lt;/Grid&amp;gt;
+                &amp;lt;/DataTemplate&amp;gt;
+            &amp;lt;/CollectionView.ItemTemplate&amp;gt;
+        &amp;lt;/CollectionView&amp;gt;
+    &amp;lt;/VerticalStackLayout&amp;gt;
+&amp;lt;/ContentPage&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;与第一版相比，改动在这几行：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-xaml&#34; data-lang=&#34;xaml&#34;&gt;&amp;lt;SemanticProperties.Description&amp;gt;
+                            &amp;lt;MultiBinding StringFormat=&amp;#34;{}{0}；{1}；修改时间：{2}&amp;#34;&amp;gt;
+
+                                `&amp;lt;Binding Path=&amp;#34;Name&amp;#34;/&amp;gt;
+                                &amp;lt;Binding Path=&amp;#34;Description&amp;#34;/&amp;gt;
+                                &amp;lt;Binding Path=&amp;#34;UpdatedTime&amp;#34;/&amp;gt;
+                            &amp;lt;/MultiBinding&amp;gt;
+                        &amp;lt;/SemanticProperties.Description&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;这里用到了 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 属性和多重绑定机制。 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 是 .NET MAUI 内置的辅助功能属性，利用这一属性，我们可以为控件添加描述信息。由于信息仅辅助技术可见，因此不会影响视觉效果。&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;SemanticProperties&lt;/code&gt; class 孩有其他有用的属性，可以为控件添加更多语义信息，比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;HeadingLevel&lt;/li&gt;
+&lt;li&gt;Hint&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;需要注意的是， &lt;code&gt;SemanticProperties&lt;/code&gt; 提供的信息有时候会覆盖控件本身的内容。比如同时为 &lt;code&gt;Button&lt;/code&gt; 控件添加 &lt;code&gt;Text&lt;/code&gt; 和 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 。这时，屏幕阅读器朗读的不是 &lt;code&gt;Text&lt;/code&gt; 的值而是 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 的值。在这种情况下，最好的做法是 为 &lt;code&gt;Button&lt;/code&gt; 添加 &lt;code&gt;Text&lt;/code&gt; 属性，给出有意义的按钮名称；然后，如果有必要，添加 &lt;code&gt;SemanticProperties.Hint&lt;/code&gt; 属性，给出控件的帮助信息或其他详情。当然，这些信息都不是肉眼可见的，仅仅对辅助技术用户获取信息有益。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://www.jjyyblahblah.xyz/tags/.net-maui/" term=".NET MAUI" label=".NET MAUI" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D/" term="无障碍" label="无障碍" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E5%B1%8F%E5%B9%95%E9%98%85%E8%AF%BB%E5%99%A8/" term="屏幕阅读器" label="屏幕阅读器" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E6%A8%A1%E6%9D%BF/" term="数据模板" label="数据模板" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" term="数据绑定" label="数据绑定" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">在 Windows 上配置 LLVM工具链——Clang &#43; LLDB</title>
             <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/posts/post2/" />
             <id>https://www.jjyyblahblah.xyz/posts/post2/</id>
-            <updated>2025-07-25T15:31:44&#43;08:00</updated>
+            <updated>2025-09-25T20:33:52&#43;08:00</updated>
             <published>2025-07-25T15:07:02&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
