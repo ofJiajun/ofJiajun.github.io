@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.145.0"><meta name="theme-color" content="#fff" />
+    <meta name="color-scheme" content="light dark">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>探索 MonoGame 的全新资源管理项目 (ContentBuilder) | Jiajun Blah Blah</title>
+
+    <link rel="stylesheet" href="/css/meme.min.4187dcb19a1ba57bd7ee2f1c1d6eb05c20d17c055556b1d10856874a6b3af88c.css"/>
+
+    
+    
+        
+            <script src="/js/meme.min.93caf51ca41a6ed5e468d2ac73c7cdfe253a756a2192255cf28aaa8da5ea4209.js"></script>
+
+        
+    
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="Jiajun" /><meta name="description" content="No description" />
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg" />
+    <link rel="icon" type="image/png" href="/icons/favicon-96x96.png" sizes="96x96" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" sizes="180x180" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Jiajun Blah Blah" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="Jiajun Blah Blah" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+        <link rel="canonical" href="https://www.jjyyblahblah.xyz/posts/post4/" />
+    
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2026-04-22T09:00:22+08:00",
+        "dateModified": "2026-04-22T09:27:47+08:00",
+        "url": "https://www.jjyyblahblah.xyz/posts/post4/",
+        "headline": "探索 MonoGame 的全新资源管理项目 (ContentBuilder)",
+        "description": "No description",
+        "inLanguage" : "zh-CN",
+        "articleSection": "posts",
+        "wordCount":  2524 ,
+        "image": "https://www.jjyyblahblah.xyz/icons/earth.png",
+        "author": {
+            "@type": "Person",
+            "description": "On the road",
+            "email": "ofjiajun@gmail.com",
+            "image": "https://www.jjyyblahblah.xyz/icons/earth.png",
+            "url": "https://ofjiajun.github.io/",
+            "name": "Jiajun"
+        },
+        "license": "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Jiajun Blah Blah",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://www.jjyyblahblah.xyz/icons/earth.png"
+            },
+            "url": "https://www.jjyyblahblah.xyz/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://www.jjyyblahblah.xyz/"
+        }
+    }
+</script>
+
+    
+
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@jiajun57973367" />
+<meta name="twitter:creator" content="@jiajun57973367" />
+
+    
+
+
+
+<meta property="og:title" content="探索 MonoGame 的全新资源管理项目 (ContentBuilder)" />
+<meta property="og:description" content="No description" />
+<meta property="og:url" content="https://www.jjyyblahblah.xyz/posts/post4/" />
+<meta property="og:site_name" content="Jiajun Blah Blah" />
+<meta property="og:locale" content="zh-cn" /><meta property="og:image" content="https://www.jjyyblahblah.xyz/icons/earth.png" />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2026-04-22T09:00:22&#43;08:00" />
+    <meta property="article:modified_time" content="2026-04-22T09:27:47&#43;08:00" />
+    
+    <meta property="article:section" content="posts" />
+
+
+
+    
+    
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header">
+        
+            <div class="header-wrapper">
+                <div class="header-inner single">
+                    
+    <div class="site-brand">
+        
+            <a href="/" class="brand">Jiajun Blah Blah</a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+
+        
+            
+                <li class="menu-item"><a href="/posts/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon archive"><path d="M32 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V160H32v288zm160-212c0-6.6 5.4-12 12-12h104c6.6 0 12 5.4 12 12v8c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-8zM480 32H32C14.3 32 0 46.3 0 64v48c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16V64c0-17.7-14.3-32-32-32z"/></svg><span class="menu-item-name">文章</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/categories/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon th"><path d="M149.333 56v80c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24V56c0-13.255 10.745-24 24-24h101.333c13.255 0 24 10.745 24 24zm181.334 240v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm32-240v80c0 13.255 10.745 24 24 24H488c13.255 0 24-10.745 24-24V56c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24zm-32 80V56c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.256 0 24.001-10.745 24.001-24zm-205.334 56H24c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24zM0 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H24c-13.255 0-24 10.745-24 24zm386.667-56H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zm0 160H488c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H386.667c-13.255 0-24 10.745-24 24v80c0 13.255 10.745 24 24 24zM181.333 376v80c0 13.255 10.745 24 24 24h101.333c13.255 0 24-10.745 24-24v-80c0-13.255-10.745-24-24-24H205.333c-13.255 0-24 10.745-24 24z"/></svg><span class="menu-item-name">分类</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon tags"><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon user-circle"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
+                
+                    
+                    
+                        <li class="menu-item">
+                            <a id="theme-switcher" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-light"><path d="M193.2 104.5l48.8-97.5a18 18 0 0128 0l48.8 97.5 103.4 -34.5a18 18 0 0119.8 19.8l-34.5 103.4l97.5 48.8a18 18 0 010 28l-97.5 48.8 34.5 103.4a18 18 0 01-19.8 19.8l-103.4-34.5-48.8 97.5a18 18 0 01-28 0l-48.8-97.5l-103.4 34.5a18 18 0 01-19.8-19.8l34.5-103.4-97.5-48.8a18 18 0 010-28l97.5-48.8-34.5-103.4a18 18 0 0119.8-19.8zM256 128a128 128 0 10.01 0M256 160a96 96 0 10.01 0"/></svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon theme-icon-dark"><path d="M27 412a256 256 0 10154-407a11.5 11.5 0 00-5 20a201.5 201.5 0 01-134 374a11.5 11.5 0 00-15 13"/></svg></a>
+                        </li>
+                    
+                
+            
+        
+            
+                
+            
+        
+    </ul>
+</nav>
+
+                    
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        
+
+        <article class="content post h-entry" data-align="justify" data-type="posts" data-toc-num="true">
+
+            <h1 class="post-title p-name">探索 MonoGame 的全新资源管理项目 (ContentBuilder)</h1>
+
+            
+
+            
+                <div class="post-description p-summary">No description</div>
+                
+            
+
+            
+                
+
+<div class="post-meta">
+    
+        
+        <time datetime="2026-04-22T09:00:22&#43;08:00" class="post-meta-item published dt-published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2026.4.22</time>
+    
+    
+        
+        <time datetime="2026-04-22T09:27:47&#43;08:00" class="post-meta-item modified dt-updated"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"/></svg>&nbsp;2026.4.22</time>
+    
+    
+    
+        
+        
+        
+            
+                <span class="post-meta-item category"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M464 128H272l-54.63-54.63c-6-6-14.14-9.37-22.63-9.37H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V176c0-26.51-21.49-48-48-48zm0 272H48V112h140.12l54.63 54.63c6 6 14.14 9.37 22.63 9.37H464v224z"/></svg>&nbsp;<a href="/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" class="category-link p-category">奇技与淫巧</a></span>
+            
+        
+    
+    
+        
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;2524</span>
+    
+    
+        
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;6&nbsp;分钟</span>
+    
+    
+    
+</div>
+
+            
+
+            <div class="post-body e-content">
+                <p>新的内容管理 (Content Builder Project) 类似于自己写一个命令行内容管理工具。</p>
+<p>使用这个特性要求使用 3.8.5+ 的版本，现在是预览版。</p>
+<p>安装这套项目模板的方式如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl"><span class="p">&gt;</span>dotnet new install MonoGame.Templates.CSharp@3.8.*-preview.*
+</span></span></code></pre></div><p>完成后可以通过下面的指令：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl"># 查看已经安装的橡木模板
+</span></span><span class="line"><span class="cl"><span class="p">&gt;</span>dotnet new list MonoGame
+</span></span><span class="line"><span class="cl">#创建一个 MonoGame-Windows 项目
+</span></span><span class="line"><span class="cl"><span class="p">&gt;</span>dotnet new mgwindowsdx
+</span></span></code></pre></div><h2>创建 ContentBuilder</h2>
+<p>在游戏项目的评级目录，也就是 .csproj 文件所在目录的上一级目录进行操作。</p>
+<p>我们将新建一个与游戏项目分离的 ContentBuilder 项目，首先，使用 CMD 或 Powershell 打开这一层的目录：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl"># 新建文件夹
+</span></span><span class="line"><span class="cl"><span class="p">&gt;</span>mkdir MyContentBuilder
+</span></span><span class="line"><span class="cl"># 新建 ContentBuilder 项目
+</span></span><span class="line"><span class="cl"><span class="p">&gt;</span>dotnet new mgcb -o MyContentBuilder
+</span></span><span class="line"><span class="cl"># 把新建的 ContentBuilder 添加到游戏主项目的解决方案中
+</span></span><span class="line"><span class="cl"><span class="p">&gt;</span>dotnet sln add MyContentBuilder/MyContentBuilder.csproj
+</span></span></code></pre></div><p>现在，顶层的文件夹结构应该是</p>
+<ul>
+<li>游戏主项目</li>
+<li>ContentBuilder 项目</li>
+<li>整个项目的解决方案文件 (.sln 或 .slnx)</li>
+</ul>
+<h2>修改游戏项目</h2>
+<p>从游戏项目中移除旧的资源管理工具链。</p>
+<p>第一步，移除 dotnet tool ，也就是旧的 mgcb-editor 。直接删除
+<code>.config</code>
+文件夹即可。</p>
+<p>第二部移除原来的 Content 文件夹，将资源移动到新建的 ContentBuilder 项目的 Assets 文件夹中。</p>
+<p>第三部，移除所有与 MonoGame 内容管理相关的包引用。</p>
+<p>打开
+.csproj
+文件，，向下找到声明 package 引用的
+<code>&lt;ItemGroup&gt;</code>
+节点。</p>
+<p>可能存在多个
+<code>&lt;ItemGroup&gt;</code>
+节点，一般是随在所有的
+<code>&lt;ProjectGroup&gt;</code>
+节点后的第一个
+<code>&lt;ItemGroup&gt;</code> 块。</p>
+<p>内容类似于这样</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;ItemGroup&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">&#34;MonoGame.Framework.WindowsDX&#34;</span> <span class="na">Version=</span><span class="s">&#34;3.8.*&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">&#34;MonoGame.Content.Builder.Task&#34;</span> <span class="na">Version=</span><span class="s">&#34;3.8.*&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="c">&lt;!-- 其他引用 --&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;PackageReference</span> <span class="na">Include=</span><span class="s">&#34;Newtonsoft.Json&#34;</span> <span class="na">Version=</span><span class="s">&#34;13.0.3&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/ItemGroup&gt;</span>
+</span></span></code></pre></div><p>删掉这个
+<code>&lt;PackageReference Include=&quot;MonoGame.Content.Builder.Task&quot; Version=&quot;3.8.*&quot; /&gt;</code> 。</p>
+<p>另外，改一下版本号，匹配 ContentBuilder 项目中引用的包的版本。类似于
+<code>&lt;PackageReference Include=&quot;MonoGame.Framework.WindowsDX&quot; Version=&quot;3.8.5-preview.*&quot; /&gt;</code> 。</p>
+<h2>在游戏项目中集成 ContentBuilder</h2>
+<p>在 .csproj 文件的末尾
+<code>&lt;/Project&gt;</code>
+标签前面新起一行，添加如下配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-xml" data-lang="xml"><span class="line"><span class="cl">  <span class="nt">&lt;Target</span> <span class="na">Name=</span><span class="s">&#34;BuildContent&#34;</span> <span class="na">BeforeTargets=</span><span class="s">&#34;BeforeCompile&#34;</span><span class="nt">&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;PropertyGroup&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;BuilderRoot&gt;</span>$(SolutionDir)ContentBuilder<span class="nt">&lt;/BuilderRoot&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;ContentCommand&gt;</span>$([System.IO.Path]::Combine(&#39;$(BuilderRoot)&#39;,&#39;bin\Debug\ContentBuilder.exe&#39;))<span class="nt">&lt;/ContentCommand&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;AssetsDir&gt;</span>$([System.IO.Path]::Combine(&#39;$(BuilderRoot)&#39;, &#39;Assets&#39;))<span class="nt">&lt;/AssetsDir&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;ContentOutput&gt;</span>$(ProjectDir)$(OutputPath)<span class="nt">&lt;/ContentOutput&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;ContentTemp&gt;</span>$(ProjectDir)$(IntermediateOutputPath)<span class="nt">&lt;/ContentTemp&gt;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">&lt;ContentArgs&gt;</span>build -p $(MonoGamePlatform) -s $(AssetsDir) -o $(ContentOutput) -i $(ContentTemp)<span class="nt">&lt;/ContentArgs&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;/PropertyGroup&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;MSBuild</span> <span class="na">Projects=</span><span class="s">&#34;$(BuilderRoot)\BBBallContentBuilder.csproj&#34;</span> <span class="na">Targets=</span><span class="s">&#34;Build&#34;</span> <span class="na">RemoveProperties=</span><span class="s">&#34;Configuration;TargetFramework;RuntimeIdentifier;RuntimeIdentifiers&#34;</span><span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&lt;Exec</span> <span class="na">Command=</span><span class="s">&#34;$(ContentCommand) $(ContentArgs)&#34;</span> <span class="na">WorkingDirectory=</span><span class="s">&#34;$(MSBuildThisFileDirectory)..\&#34;</span> <span class="na">CustomErrorRegularExpression=</span><span class="s">&#34;\[E\] .+&#34;</span> <span class="na">CustomWarningRegularExpression=</span><span class="s">&#34;\[W\] .+&#34;</span> <span class="nt">/&gt;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">&lt;/Target&gt;</span>
+</span></span></code></pre></div><p>需要注意几个地方。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csproj" data-lang="csproj"><span class="line"><span class="cl"><span class="nt">&lt;AssetsDir&gt;</span>$([System.IO.Path]::Combine(&#39;$(BuilderRoot)&#39;, &#39;Assets&#39;))<span class="nt">&lt;/AssetsDir&gt;</span>
+</span></span></code></pre></div><p>这一行是位于 ContentBuilder 下的 Assets 文件夹，如果你修改了资源文件路径，务必修改这个节点以对齐：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csproj" data-lang="csproj"><span class="line"><span class="cl"><span class="nt">&lt;ContentCommand&gt;</span>$([System.IO.Path]::Combine(&#39;$(BuilderRoot)&#39;,&#39;bin\Debug\ContentBuilder.exe&#39;))<span class="nt">&lt;/ContentCommand&gt;</span>
+</span></span></code></pre></div><p>记得把这一行指向 ContentBuilder 实际编译出来的可执行文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-csproj" data-lang="csproj"><span class="line"><span class="cl"><span class="nt">&lt;BuilderRoot&gt;</span>$(SolutionDir)ContentBuilder<span class="nt">&lt;/BuilderRoot&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="nt">&lt;MSBuild</span> <span class="na">Projects=</span><span class="s">&#34;$(BuilderRoot)\ContentBuilder.csproj&#34;</span> <span class="na">Targets=</span><span class="s">&#34;Build&#34;</span> <span class="na">RemoveProperties=</span><span class="s">&#34;Configuration;TargetFramework;RuntimeIdentifier;RuntimeIdentifiers&#34;</span><span class="nt">/&gt;</span>
+</span></span></code></pre></div><p>确保这两个路径与实际创建的 ContentBuilder 项目一致：</p>
+<p>最后，不要轻易动用格式化 ，项目文件中添加不必要的换行或空格可能导致编译失败。</p>
+<p>现在，在主项目解决方案文件夹下键入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-cmd" data-lang="cmd"><span class="line"><span class="cl">dotnet build
+</span></span></code></pre></div><p>流程将自动构建自定义的 ContentBuilder ，然后调用它处理资源，并将处理结果输出到主游戏项目的输出路径中。比如
+<code>GameSolution/Game/bin/Debug/net8.0-windows/Content</code></p>
+<h2>Builder.cs</h2>
+<p>接下来的部分我们对 ContentBuilder 项目进行一些探索，主要是
+<code>Builder.cs</code>
+这个文件；并展示怎么自定义一个完全可控的资源处理流程，包含将资源导入到处理到写出到读取的四个步骤。</p>
+<p>首先来看 Builder 类。文件路径：
+<code>ContentBuilder/Builder/Builder.cs</code>。</p>
+<h3>构建/编译参数</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">Microsoft.Xna.Framework.Content.Pipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">MonoGame.Framework.Content.Pipeline.Builder</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 资源构建参数</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">contentCollectionArgs</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ContentBuilderParams</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Mode</span> <span class="p">=</span> <span class="n">ContentBuilderMode</span><span class="p">.</span><span class="n">Builder</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 所有操作的根目录</span>
+</span></span><span class="line"><span class="cl">    <span class="n">WorkingDirectory</span> <span class="p">=</span> <span class="s">$&#34;{AppContext.BaseDirectory}../../../&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 要编译的资源文件的路径</span>
+</span></span><span class="line"><span class="cl">    <span class="n">SourceDirectory</span> <span class="p">=</span> <span class="s">&#34;Assets&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="c1">// 已编译的资源文件的保存路径</span>
+</span></span><span class="line"><span class="cl">    <span class="n">OutputDirectory</span> <span class="p">=</span> <span class="s">&#34;bin/Content&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 临时文件的位置</span>
+</span></span><span class="line"><span class="cl">    <span class="n">IntermediateDirectory</span> <span class="p">=</span> <span class="s">&#34;obj/Content&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 编译资源针对的操作系统/平台</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Platform</span> <span class="p">=</span> <span class="n">TargetPlatform</span><span class="p">.</span><span class="n">DesktopGL</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 日志详细程度</span>
+</span></span><span class="line"><span class="cl">    <span class="n">LogLevel</span> <span class="p">=</span> <span class="n">LogLevel</span><span class="p">.</span><span class="n">Info</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 是否应对输出文件进行压缩</span>
+</span></span><span class="line"><span class="cl">    <span class="n">CompressContent</span> <span class="p">=</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 是否忽略缓存，强制重新编译资源</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Rebuild</span> <span class="p">=</span> <span class="kc">false</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">builder</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Builder</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">args</span> <span class="k">is</span> <span class="n">not</span> <span class="kc">null</span> <span class="p">&amp;&amp;</span> <span class="n">args</span><span class="p">.</span><span class="n">Length</span> <span class="p">&gt;</span> <span class="m">0</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">builder</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="n">args</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">builder</span><span class="p">.</span><span class="n">Run</span><span class="p">(</span><span class="n">contentCollectionArgs</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">return</span> <span class="n">builder</span><span class="p">.</span><span class="n">FailedToBuild</span> <span class="p">&gt;</span> <span class="m">0</span> <span class="p">?</span> <span class="p">-</span><span class="m">1</span> <span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+</span></span></code></pre></div><h3>资源/内容处理规则</h3>
+<p>在
+<code>public class Builder : ContentBuilder</code>
+中的
+<code>GetContentCollection()</code>
+方法内定义资源/内容怎样被处理，这又包括两个过程：</p>
+<ol>
+<li>哪些资源会被处理</li>
+<li>应该怎么处理？</li>
+</ol>
+<h4>导入资源</h4>
+<p>Assets 资源目录下的文件夹结构默认情况下会被保留到输出中。自定义输出结构的方法见下文。</p>
+<h5>使用通配符匹配</h5>
+<p><code>WildcardRule</code> 用来定义如何引入、排除特定的文件/文件夹。</p>
+<p>通配符模式参考：</p>
+<div class="table-container"><table>
+  <thead>
+      <tr>
+          <th>模式</th>
+          <th>匹配</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>*</code></td>
+          <td>任何字符序列</td>
+      </tr>
+      <tr>
+          <td><code>?</code></td>
+          <td>任何单个字符</td>
+      </tr>
+      <tr>
+          <td><code>[abc]</code></td>
+          <td>括号中的任一字符(多选一）</td>
+      </tr>
+      <tr>
+          <td><code>[!abc]</code></td>
+          <td>任一字符，只要不在括号中</td>
+      </tr>
+      <tr>
+          <td><code>{a,b,c}</code></td>
+          <td>括号内的任何候选项（参考这个用法<code>*.{png,jpg,bmp}</code>)</td>
+      </tr>
+  </tbody>
+</table></div>
+<hr>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">override</span> <span class="n">IContentCollection</span> <span class="n">GetContentCollection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">contentCollection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ContentCollection</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 通配符模式，包含资源文件夹下所有文件</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 官方推荐保留这一行，在其后编写特定逻辑</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 移除此行，仅仅包含自定义逻辑也是允许的</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 所有的 rules 按照顺序求值</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 引入所有 png 文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*.png&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 引入 Textures 文件夹下所有的文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;Textures/*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 引入任何子目录下的 png 文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*/*.png&#34;</span><span class="p">);</span>        
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 指定类型引入文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*.{png,jpg,bmp}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 复制而不予处理</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">IncludeCopy</span><span class="p">(</span><span class="s">&#34;Data/config.json&#34;</span><span class="p">,</span> <span class="s">&#34;config.json&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 引入某个文件，但输出到不同的文件夹</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">(</span><span class="s">&#34;Sprites/player.png&#34;</span><span class="p">,</span> <span class="s">&#34;Characters/Player.xnb&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 排除文件</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 排除特定文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Exclude</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;texture/texture01.png&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 排除带有 debug 字样的 png</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Exclude</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*debug*.png&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 排除以 test_ 开头的文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Exclude</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;test_*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 排除特定文件夹下所有文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Exclude</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;Debug/*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5>使用正则匹配</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">override</span> <span class="n">IContentCollection</span> <span class="n">GetContentCollection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">contentCollection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ContentCollection</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 匹配以 _diffuse.png 结尾的文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">RegexRule</span><span class="p">&gt;(</span><span class="s">@&#34;.*_diffuse\.png$&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 匹配一个或多个连续数字</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">RegexRule</span><span class="p">&gt;(</span><span class="s">@&#34;level_\d+\.tmx&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 匹配特定文件夹下的特定文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">RegexRule</span><span class="p">&gt;(</span><span class="s">@&#34;^(Textures|Sprites)/.*\.png$&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 排除规则里也可以用</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 后缀 .backup 结尾的备份文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Exclude</span><span class="p">&lt;</span><span class="n">RegexRule</span><span class="p">&gt;(</span><span class="s">@&#34;.*\.bak$&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 波浪号结尾的临时文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Exclude</span><span class="p">&lt;</span><span class="n">RegexRule</span><span class="p">&gt;(</span><span class="s">@&#34;.*~$&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// ...</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5>文件夹管理</h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">override</span> <span class="n">IContentCollection</span> <span class="n">GetContentCollection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">contentCollection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ContentCollection</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 图片文件夹</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">SetContentRoot</span><span class="p">(</span><span class="s">&#34;Graphics&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*.{png,jpg,bmp}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 音频文件夹</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">SetContentRoot</span><span class="p">(</span><span class="s">&#34;Audio&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*.{wav,mp3,ogg}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 字体文件夹</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">SetContentRoot</span><span class="p">(</span><span class="s">&#34;Fonts&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*.spritefont&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 其他仅需要复制到输出目录的文件</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">SetContentRoot</span><span class="p">(</span><span class="s">&#34;Data&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">IncludeCopy</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*.{xml,json,txt}&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h4>处理资源</h4>
+<p>资源的完整自定义处理逻辑涉及四个类，下面以自定义处理 MP3 文件为例。</p>
+<p>目标，将 MP3 文件读取为 <code>byte[]</code>，并在游戏中通过
+<code>ContentManager Content</code> 的
+<code>Load&lt;byte[]&gt;(&quot;sounds/MP3Name&quot;)</code>
+载入 MP3 内容。</p>
+<h5>使用自定义 Importer 和 Processor</h5>
+<p>先看 ContentBuilder 项目的 Builder.cs 中需要做的工作。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">override</span> <span class="n">IContentCollection</span> <span class="n">GetContentCollection</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">var</span> <span class="n">contentCollection</span> <span class="p">=</span> <span class="k">new</span> <span class="n">ContentCollection</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">&lt;</span><span class="n">WildcardRule</span><span class="p">&gt;(</span><span class="s">&#34;*&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 参数 1 指定载入一个 MP3    </span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 参数 2、3 的 Importer 和 Processor 是我们重写的</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 这里也可以使用 WildCardRule 批量处理 mp3 文件，具体规则在上文有介绍</span>
+</span></span><span class="line"><span class="cl">    <span class="n">contentCollection</span><span class="p">.</span><span class="n">Include</span><span class="p">(</span><span class="s">&#34;sounds/bgm/menuBackground.mp3&#34;</span><span class="p">,</span> <span class="k">new</span> <span class="n">FmodByteImporter</span><span class="p">(),</span> <span class="k">new</span> <span class="n">FmodByteProcessor</span><span class="p">());</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">contentCollection</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5>自定义 Importer 和 Processor</h5>
+<p>在 ContentBuilder 项目中新建两个类：</p>
+<p>Importer 负责导入内容:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">Microsoft.Xna.Framework.Content.Pipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nn">ContentBuilder.ContentPipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 显示名随便写</span>
+</span></span><span class="line"><span class="cl"><span class="na">[ContentImporter(&#34;.fmod&#34;, DisplayName = &#34;FmodByteImporter&#34;, DefaultProcessor = &#34;FmodByteProcessor&#34;)]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 这个泛型参数要写我们的目标类型 byte[]</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">FmodByteImporter</span> <span class="p">:</span> <span class="n">ContentImporter</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 这里什么也不做，就是从磁盘上把文件读入 byte[]</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">override</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">Import</span><span class="p">(</span><span class="kt">string</span> <span class="n">filename</span><span class="p">,</span> <span class="n">ContentImporterContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="n">System</span><span class="p">.</span><span class="n">IO</span><span class="p">.</span><span class="n">File</span><span class="p">.</span><span class="n">ReadAllBytes</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Processor 负责处理数据:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">Microsoft.Xna.Framework.Content.Pipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nn">ContentBuilder.ContentPipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 显示名随意</span>
+</span></span><span class="line"><span class="cl"><span class="na">[ContentProcessor(DisplayName = &#34;FmodByteProcessor&#34;)]</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// 泛型参数同上 byte[]</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span>  <span class="k">class</span> <span class="nc">FmodByteProcessor</span> <span class="p">:</span> <span class="n">ContentProcessor</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[],</span> <span class="kt">byte</span><span class="p">[]&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">override</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">Process</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]</span> <span class="n">input</span><span class="p">,</span> <span class="n">ContentProcessorContext</span> <span class="n">context</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 这里接收从 Importer 导入的 byte[]</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 可以在这里添加解密、裁剪或格式校验逻辑</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 这里我们直接返回原始数组，不对文件进行解析</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">input</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5>自定义 Writer</h5>
+<p>在 ContentBuilder 中增加这个类。</p>
+<p>Writer 的职责是将数据写出到 .xnb 文件：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">Microsoft.Xna.Framework.Content.Pipeline</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nn">ContentPipelineExtension</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="na">
+</span></span></span><span class="line"><span class="cl"><span class="na">[ContentTypeWriter]</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">FmodByteWriter</span> <span class="p">:</span> <span class="n">ContentTypeWriter</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">protected</span> <span class="kd">override</span> <span class="k">void</span> <span class="n">Write</span><span class="p">(</span><span class="n">ContentWriter</span> <span class="n">output</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="k">value</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 先写长度，再写数据</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="k">value</span><span class="p">.</span><span class="n">Length</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">        <span class="n">output</span><span class="p">.</span><span class="n">Write</span><span class="p">(</span><span class="k">value</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1">// 这一步很关键</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">// 涉及游戏主项目能不能正确载入资源</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">public</span> <span class="kd">override</span> <span class="kt">string</span> <span class="n">GetRuntimeReader</span><span class="p">(</span><span class="n">TargetPlatform</span> <span class="n">targetPlatform</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 这里的字符串表示的是主项目中对我们载入的 byte[] 资源进行读取的 Reader 类</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果 ContentBuilder 的这个项目引用了这个 Reader 所在的项目</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 最安全的写法是</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// return typeof(Content.Service.RawAudioReader).AssemblyQualifiedName;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果没有这样的引用，那么，就参照主项目中实际存在的 Reader 类来写，稍后我们会创建这个类，这里假设它存在</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 这个字符串由逗号 &#34;,&#34; 分割为两部分，第一部分是 Reader 的完全限定名，即包含命名空间在内的类名</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 第二个部分是你的游戏主项目的程序集名称，一般与你的项目同名</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 如果实在不知道怎么写，就在 实际的 Reader 类中，写一行下面的语句，然后打印出来看看</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// string correctString = this.GetType().AssemblyQualifiedName; </span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="s">&#34;BBBall.Service.FmodByteReader, BBBall&#34;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="kd">public</span> <span class="kd">override</span> <span class="kt">string</span> <span class="n">GetRuntimeType</span><span class="p">(</span><span class="n">TargetPlatform</span> <span class="n">targetPlatform</span><span class="p">)</span> <span class="p">=&gt;</span> <span class="k">typeof</span><span class="p">(</span><span class="kt">byte</span><span class="p">[]).</span><span class="n">AssemblyQualifiedName</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5>自定义 Reader</h5>
+<p>在游戏主项目中创建这个类。</p>
+<p>Reader 的任务是运行时从 .xnb 文件中还原数据：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="k">using</span> <span class="nn">Microsoft.Xna.Framework.Content</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 命名空间和类名要和上面 Writer 中的字符串保持一致</span>
+</span></span><span class="line"><span class="cl"><span class="k">namespace</span> <span class="nn">BBBall.Service</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="k">class</span> <span class="nc">FmodByteReader</span> <span class="p">:</span> <span class="n">ContentTypeReader</span><span class="p">&lt;</span><span class="kt">byte</span><span class="p">[]&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">protected</span> <span class="kd">override</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">Read</span><span class="p">(</span><span class="n">ContentReader</span> <span class="n">input</span><span class="p">,</span> <span class="kt">byte</span><span class="p">[]</span> <span class="n">existingInstance</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// 读取顺序必须与 Writer 一致：先读长度，再读数组</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">int</span> <span class="n">size</span> <span class="p">=</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadInt32</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">                <span class="k">return</span> <span class="n">input</span><span class="p">.</span><span class="n">ReadBytes</span><span class="p">(</span><span class="n">size</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h5>在项目中载入资源</h5>
+<p>如果之前编译过资源，构建项目时不会二次编译，需要首先到游戏主项目的输出目录下将 Content （资源输出目录）移除，然后在构建项目。构建完成后就可以正常在项目中载入
+<code>byte[]</code>
+形式存储的 MP3 了。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-C#" data-lang="C#"><span class="line"><span class="cl"><span class="n">Audio</span><span class="p">.</span><span class="n">Init</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="kt">var</span> <span class="n">menuBackground</span> <span class="p">=</span> <span class="n">Content</span><span class="p">.</span><span class="n">Load</span><span class="p">&lt;</span><span class="n">Byte</span><span class="p">[]&gt;(</span><span class="s">&#34;sounds/bgm/menuBackground&#34;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">Audio</span><span class="p">.</span><span class="n">GetMusicState</span><span class="p">()</span> <span class="p">==</span> <span class="n">Audio</span><span class="p">.</span><span class="n">PlayState</span><span class="p">.</span><span class="n">Stopped</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">Audio</span><span class="p">.</span><span class="n">PlayMusic</span><span class="p">(</span><span class="n">menuBackground</span><span class="p">);</span>
+</span></span></code></pre></div><hr>
+<p>参考链接: <a href="https://docs.monogame.net/articles/getting_started/content_pipeline/content_builder_project.html?tabs=vscode#adding-the-content-builder-project-to-your-game" target="_blank" rel="noopener">https://docs.monogame.net/articles/getting_started/content_pipeline/content_builder_project.html?tabs=vscode#adding-the-content-builder-project-to-your-game</a></p>
+
+            </div>
+
+            
+    
+    
+        <ul class="post-copyright">
+            <li class="copyright-item author"><span class="copyright-item-text">作者</span>：<a href="https://ofjiajun.github.io/" class="p-author h-card" target="_blank" rel="noopener">Jiajun</a></li>
+            
+                
+                
+                
+                
+                <li class="copyright-item link"><span class="copyright-item-text">链接</span>：<a href="/posts/post4/" target="_blank" rel="noopener">https://www.jjyyblahblah.xyz/posts/post4/</a></li>
+            
+            <li class="copyright-item license"><span class="copyright-item-text">许可</span>：<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></li>
+            
+        </ul>
+    
+
+
+
+        </article>
+
+        
+
+        
+    <div class="updated-badge-container">
+        <span title="Updated @ 2026-04-22 09:27:47 CST" style="cursor:help">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2026-04-22</text><text x="915" y="140" textLength="650" transform="scale(.1)">2026-04-22</text></g></svg>
+        </span></div>
+
+
+
+        
+
+
+        <div class="post-share">
+
+        
+
+        <div class="share-items">
+
+            
+            
+                
+                    <div class="share-item facebook">
+                        
+                        <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.jjyyblahblah.xyz/posts/post4/&amp;hashtag=%23Monogame" title="分享到「Facebook」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon facebook-icon"><path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item mastodon">
+                            <a href="/fedishare.html#title=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;description=No%20description&amp;url=https://www.jjyyblahblah.xyz/posts/post4/" title="分享到「Mastodon」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon mastodon-icon"><path d="M433 179.11c0-97.2-63.71-125.7-63.71-125.7-62.52-28.7-228.56-28.4-290.48 0 0 0-63.72 28.5-63.72 125.7 0 115.7-6.6 259.4 105.63 289.1 40.51 10.7 75.32 13 103.33 11.4 50.81-2.8 79.32-18.1 79.32-18.1l-1.7-36.9s-36.31 11.4-77.12 10.1c-40.41-1.4-83-4.4-89.63-54a102.54 102.54 0 0 1-.9-13.9c85.63 20.9 158.65 9.1 178.75 6.7 56.12-6.7 105-41.3 111.23-72.9 9.8-49.8 9-121.5 9-121.5zm-75.12 125.2h-46.63v-114.2c0-49.7-64-51.6-64 6.9v62.5h-46.33V197c0-58.5-64-56.6-64-6.9v114.2H90.19c0-122.1-5.2-147.9 18.41-175 25.9-28.9 79.82-30.8 103.83 6.1l11.6 19.5 11.6-19.5c24.11-37.1 78.12-34.8 103.83-6.1 23.71 27.3 18.4 53 18.4 175z"/></svg></a>
+                        </div>
+                    
+            
+                
+                    <div class="share-item fediverse">
+                            <a href="/fedishare.html#title=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;description=No%20description&amp;url=https://www.jjyyblahblah.xyz/posts/post4/" title="分享到「Fediverse」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="64 163 873 873" class="icon fediverse-icon"><defs><linearGradient id="fediverse-gradient"><stop offset="0%" stop-color="#ff0101"/><stop offset="10%" stop-color="#9501ff"/><stop offset="50%" stop-color="#ffca01"/><stop offset="75%" stop-color="#01a3ff"/><stop offset="100%" stop-color="#65ff01"/></linearGradient></defs><path d="M539 176q-32 0 -55 22t-25 55t20.5 58t56 27t58.5 -20.5t27 -56t-20.5 -59t-56.5 -26.5h-5zM452 271l-232 118q20 20 25 48l231 -118q-19 -20 -24 -48zM619 298q-13 25 -38 38l183 184q13 -25 39 -38zM477 320l-135 265l40 40l143 -280q-28 -5 -48 -25zM581 336 q-22 11 -46 10l-8 -1l21 132l56 9zM155 370q-32 0 -55 22.5t-25 55t20.5 58t56.5 27t59 -21t26.5 -56t-21 -58.5t-55.5 -27h-6zM245 438q1 9 1 18q-1 19 -10 35l132 21l26 -50zM470 474l-26 51l311 49q-1 -8 -1 -17q1 -19 10 -36zM842 480q-32 1 -55 23t-24.5 55t21 58 t56 27t58.5 -20.5t27 -56.5t-20.5 -59t-56.5 -27h-6zM236 493q-13 25 -39 38l210 210l51 -25zM196 531q-21 11 -44 10l-9 -1l40 256q21 -10 45 -9l8 1zM560 553l48 311q21 -10 44 -9l10 1l-46 -294zM755 576l-118 60l8 56l135 -68q-20 -20 -25 -48zM781 625l-119 231 q28 5 48 25l119 -231q-28 -5 -48 -25zM306 654l-68 134q28 5 48 25l60 -119zM568 671l-281 143q19 20 24 48l265 -135zM513 771l-51 25l106 107q13 -25 39 -38zM222 795q-32 0 -55.5 22.5t-25 55t21 57.5t56 27t58.5 -20.5t27 -56t-20.5 -58.5t-56.5 -27h-5zM311 863 q2 9 1 18q-1 19 -9 35l256 41q-1 -9 -1 -18q1 -18 10 -35zM646 863q-32 0 -55 22.5t-24.5 55t20.5 58t56 27t59 -21t27 -56t-20.5 -58.5t-56.5 -27h-6z"/></svg></a>
+                        </div>
+                    
+            
+                
+                    <div class="share-item twitter">
+                        
+                        <a href="https://twitter.com/share?url=https://www.jjyyblahblah.xyz/posts/post4/&amp;text=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;hashtags=Monogame,ContentBuilder,ngcb,,&amp;via=jiajun57973367" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item linkedin">
+                        
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://www.jjyyblahblah.xyz/posts/post4/&amp;title=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;summary=No%20description&amp;source=Jiajun%20Blah%20Blah" title="分享到「LinkedIn」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon linkedin-icon"><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item telegram">
+                        
+                        <a href="https://t.me/share/url?url=https://www.jjyyblahblah.xyz/posts/post4/&amp;text=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29" title="分享到「Telegram」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon telegram-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item weibo">
+                        
+                        <a href="https://service.weibo.com/share/share.php?&amp;url=https://www.jjyyblahblah.xyz/posts/post4/&amp;title=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;pic=https://www.jjyyblahblah.xyz/icons/earth.png&amp;searchPic=false" title="分享到「新浪微博」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon weibo-icon"><path d="M407 177.6c7.6-24-13.4-46.8-37.4-41.7-22 4.8-28.8-28.1-7.1-32.8 50.1-10.9 92.3 37.1 76.5 84.8-6.8 21.2-38.8 10.8-32-10.3zM214.8 446.7C108.5 446.7 0 395.3 0 310.4c0-44.3 28-95.4 76.3-143.7C176 67 279.5 65.8 249.9 161c-4 13.1 12.3 5.7 12.3 6 79.5-33.6 140.5-16.8 114 51.4-3.7 9.4 1.1 10.9 8.3 13.1 135.7 42.3 34.8 215.2-169.7 215.2zm143.7-146.3c-5.4-55.7-78.5-94-163.4-85.7-84.8 8.6-148.8 60.3-143.4 116s78.5 94 163.4 85.7c84.8-8.6 148.8-60.3 143.4-116zM347.9 35.1c-25.9 5.6-16.8 43.7 8.3 38.3 72.3-15.2 134.8 52.8 111.7 124-7.4 24.2 29.1 37 37.4 12 31.9-99.8-55.1-195.9-157.4-174.3zm-78.5 311c-17.1 38.8-66.8 60-109.1 46.3-40.8-13.1-58-53.4-40.3-89.7 17.7-35.4 63.1-55.4 103.4-45.1 42 10.8 63.1 50.2 46 88.5zm-86.3-30c-12.9-5.4-30 .3-38 12.9-8.3 12.9-4.3 28 8.6 34 13.1 6 30.8.3 39.1-12.9 8-13.1 3.7-28.3-9.7-34zm32.6-13.4c-5.1-1.7-11.4.6-14.3 5.4-2.9 5.1-1.4 10.6 3.7 12.9 5.1 2 11.7-.3 14.6-5.4 2.8-5.2 1.1-10.9-4-12.9z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item douban">
+                        
+                        <a href="https://www.douban.com/share/service?href=https://www.jjyyblahblah.xyz/posts/post4/&amp;name=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;text=No%20description" title="分享到「豆瓣」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon douban-icon"><path d="M.643.92v2.412h22.714V.92H.643zm1.974 4.926v9.42h18.764v-9.42H2.617zm2.72 2.408H18.69v4.605H5.338V8.254zm1.657 7.412l-2.512.938c1.037 1.461 1.87 2.825 2.512 4.091H0v2.385h24v-2.385h-6.678c.818-1.176 1.589-2.543 2.303-4.091l-2.73-.938a29.952 29.952 0 01-2.479 5.03h-4.75c-.786-1.962-1.677-3.641-2.672-5.03Z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item qq">
+                        
+                        <a href="https://connect.qq.com/widget/shareqq/index.html?url=https://www.jjyyblahblah.xyz/posts/post4/&amp;title=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;summary=No%20description&amp;pics=https://www.jjyyblahblah.xyz/icons/earth.png&amp;site=Jiajun%20Blah%20Blah" title="分享到「QQ」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qq-icon"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item qzone">
+                        
+                        <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://www.jjyyblahblah.xyz/posts/post4/&amp;title=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;summary=No%20description&amp;pics=https://www.jjyyblahblah.xyz/icons/earth.png&amp;site=Jiajun%20Blah%20Blah" title="分享到「QQ 空间」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon qzone-icon"><path d="M23.985 9.202c-.032-.099-.127-.223-.334-.258-.207-.036-7.351-1.406-7.351-1.406s-.105-.022-.198-.07c-.092-.047-.127-.167-.127-.167S12.447.956 12.349.77C12.25.583 12.104.532 12 .532c-.104 0-.251.051-.349.238-.098.186-3.626 6.531-3.626 6.531s-.035.12-.128.167c-.092.047-.197.07-.197.07S.556 8.908.348 8.943c-.208.036-.302.16-.333.258a.477.477 0 0 0 .125.449l5.362 5.49s.072.08.119.172c.016.104.005.21.005.21s-1.189 7.242-1.22 7.45.075.369.159.43c.083.062.233.106.421.013.189-.093 6.812-3.261 6.812-3.261s.098-.044.201-.061c.103-.017.201.061.201.061s6.623 3.168 6.812 3.261c.188.094.338.049.421-.013a.463.463 0 0 0 .159-.43c-.021-.14-.93-5.677-.93-5.677.876-.54 1.425-1.039 1.849-1.747-2.594.969-6.006 1.717-9.415 1.866-.915.041-2.41.097-3.473-.015-.678-.071-1.17-.144-1.243-.438-.053-.215.054-.46.545-.831a2640.5 2640.5 0 0 1 2.861-2.155c1.285-.968 3.559-2.47 3.559-2.731 0-.285-2.144-.781-4.037-.781-1.945 0-2.275.132-2.811.168-.488.034-.769.005-.804-.138-.06-.248.183-.389.588-.568.709-.314 1.86-.594 1.984-.626.194-.052 3.082-.805 5.618-.535 1.318.14 3.244.668 3.244 1.276 0 .342-1.721 1.494-3.225 2.597-1.149.843-2.217 1.561-2.217 1.688 0 .342 3.533 1.241 6.689 1.01l.003-.022c.048-.092.119-.172.119-.172l5.362-5.49a.477.477 0 0 0 .127-.449z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item pocket">
+                        
+                        <a href="https://getpocket.com/edit.php?url=https://www.jjyyblahblah.xyz/posts/post4/" title="分享到「Pocket」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon pocket-icon"><path d="M407.6 64h-367C18.5 64 0 82.5 0 104.6v135.2C0 364.5 99.7 464 224.2 464c124 0 223.8-99.5 223.8-224.2V104.6c0-22.4-17.7-40.6-40.4-40.6zm-162 268.5c-12.4 11.8-31.4 11.1-42.4 0C89.5 223.6 88.3 227.4 88.3 209.3c0-16.9 13.8-30.7 30.7-30.7 17 0 16.1 3.8 105.2 89.3 90.6-86.9 88.6-89.3 105.5-89.3 16.9 0 30.7 13.8 30.7 30.7 0 17.8-2.9 15.7-114.8 123.2z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item hackernews">
+                        
+                        <a href="https://news.ycombinator.com/submitlink?u=https://www.jjyyblahblah.xyz/posts/post4/&amp;t=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29" title="分享到Hacker News" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon hackernews-icon"><path d="M0 32v448h448V32H0zm21.2 197.2H21c.1-.1.2-.3.3-.4 0 .1 0 .3-.1.4zm218 53.9V384h-31.4V281.3L128 128h37.3c52.5 98.3 49.2 101.2 59.3 125.6 12.3-27 5.8-24.4 60.6-125.6H320l-80.8 155.1z"/></svg></a>
+                    </div>
+                
+            
+                
+                    <div class="share-item qrcode">
+                        <div class="qrcode-container" title="通过「二维码」"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qrcode-icon"><path d="M0 224h192V32H0v192zM64 96h64v64H64V96zm192-64v192h192V32H256zm128 128h-64V96h64v64zM0 480h192V288H0v192zm64-128h64v64H64v-64zm352-64h32v128h-96v-32h-32v96h-64V288h96v32h64v-32zm0 160h32v32h-32v-32zm-64 0h32v32h-32v-32z"/></svg><div id="qrcode-img"></div>
+                        </div>
+                        <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+<script>
+    const typeNumber = 0;
+    const errorCorrectionLevel = 'L';
+    const qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData('https:\/\/www.jjyyblahblah.xyz\/posts\/post4\/');
+    qr.make();
+    document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
+</script>
+
+                    </div>
+                
+            
+                
+                    <div class="share-item email">
+                        
+                        <a href="mailto:?subject=%e6%8e%a2%e7%b4%a2%20MonoGame%20%e7%9a%84%e5%85%a8%e6%96%b0%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86%e9%a1%b9%e7%9b%ae%20%28ContentBuilder%29&amp;body=No%20description%0Ahttps://www.jjyyblahblah.xyz/posts/post4/" title="通过「电子邮件」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon email-icon"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg></a>
+                    </div>
+                
+            
+        </div>
+
+    </div>
+
+
+
+
+        
+    
+    
+        <div class="related-posts">
+            <h2 class="related-title">相关文章：<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon related-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm144 276c0 6.6-5.4 12-12 12h-92v92c0 6.6-5.4 12-12 12h-56c-6.6 0-12-5.4-12-12v-92h-92c-6.6 0-12-5.4-12-12v-56c0-6.6 5.4-12 12-12h92v-92c0-6.6 5.4-12 12-12h56c6.6 0 12 5.4 12 12v92h92c6.6 0 12 5.4 12 12v56z"/></svg></h2>
+            <ul class="related-list">
+                
+                    <li class="related-item">
+                        <a href="/posts/post3/" class="related-link">对 .NET MAUI 中的数据模板进行无障碍优化——以 CollectionView 为例</a>
+                    </li>
+                
+                    <li class="related-item">
+                        <a href="/posts/post2/" class="related-link">在 Windows 上配置 LLVM工具链——Clang + LLDB</a>
+                    </li>
+                
+            </ul>
+        </div>
+    
+
+
+
+        
+    
+        <div class="post-tags">
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/monogame/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Monogame</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/contentbuilder/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>ContentBuilder</a>
+                
+            
+                
+                
+                
+                
+                    
+                    <a href="/tags/ngcb/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>ngcb</a>
+                
+            
+                
+                
+                
+                
+            
+        </div>
+    
+
+
+
+        
+
+
+        
+
+
+        
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+            
+                <li class="post-nav-next">
+                    <a href="/posts/post3/" rel="next">对 .NET MAUI 中的数据模板进行无障碍优化——以 CollectionView 为例 &gt;</a>
+                </li>
+            
+        </ul>
+    
+
+
+
+        
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon arrow-up"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+
+            
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="site-info">©&nbsp;2025–2026&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;Jiajun</div><div class="powered-by">Powered by <a href="https://github.com/gohugoio/hugo" target="_blank" rel="noopener">Hugo</a> | Theme is <a href="https://github.com/reuixiy/hugo-theme-meme" target="_blank" rel="noopener">MemE</a></div><div class="site-copyright"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></div>
+
+            
+    
+        <ul class="socials"><li class="socials-item">
+                    <a href="/rss.xml" target="_blank" rel="external noopener" title="RSS"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M19.199 24C19.199 13.467 10.533 4.8 0 4.8V0c13.165 0 24 10.835 24 24h-4.801zM3.291 17.415c1.814 0 3.293 1.479 3.293 3.295 0 1.813-1.485 3.29-3.301 3.29C1.47 24 0 22.526 0 20.71s1.475-3.294 3.291-3.295zM15.909 24h-4.665c0-6.169-5.075-11.245-11.244-11.245V8.09c8.727 0 15.909 7.184 15.909 15.91z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="mailto:ofjiajun@gmail.com" target="_blank" rel="external noopener" title="Email"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://github.com/ofjiajun" target="_blank" rel="external noopener" title="GitHub"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon social-icon"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://x.com/jiajun57973367" target="_blank" rel="external noopener" title="Twitter"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon social-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                </li><li class="socials-item">
+                    <a href="https://t.me/OfJiajun" target="_blank" rel="external noopener" title="Telegram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon social-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
+                </li></ul>
+    
+
+
+
+            
+        </div>
+    </footer>
+
+
+        </div>
+        
+
+        
+
+
+    <script>
+    if (typeof MathJax === 'undefined') {
+        window.MathJax = {
+            loader: {
+                load: ['[tex]/mhchem']
+            },
+            
+            tex: {
+                inlineMath: {'[+]': [['$', '$']]},
+                tags: 'ams',
+                packages: {'[+]': ['mhchem']}
+            }
+        };
+        (function() {
+            const script = document.createElement('script');
+            script.src = 'https:\/\/cdn.jsdelivr.net\/npm\/mathjax@3.1.2\/es5\/tex-mml-chtml.js';
+            script.defer = true;
+            document.head.appendChild(script);
+        })();
+    } else {
+        MathJax.texReset();
+        MathJax.typeset();
+    }
+</script>
+
+
+
+
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    let imgNodes = document.querySelectorAll('div.post-body img');
+    imgNodes = Array.from(imgNodes).filter(node => node.parentNode.tagName !== "A");
+
+    mediumZoom(imgNodes, {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@5.1.0/instantpage.min.js" type="module" defer></script>
+
+
+
+
+
+
+    </body>
+</html>
