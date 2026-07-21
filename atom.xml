@@ -2,15 +2,15 @@
 
 
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
-    <title type="text">Jiajun Blah Blah</title>
+    <title type="text">Jiajun&#39;s Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s Blog.</subtitle>
-    <updated>2026-04-22T09:28:25&#43;08:00</updated>
-    <id>https://www.jjyyblahblah.xyz/</id>
-    <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/" />
-    <link rel="self" type="application/atom&#43;xml" href="https://www.jjyyblahblah.xyz/atom.xml" />
+    <updated>2026-07-21T10:32:06&#43;08:00</updated>
+    <id>https://jjyyblahblah.xyz/</id>
+    <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/" />
+    <link rel="self" type="application/atom&#43;xml" href="https://jjyyblahblah.xyz/atom.xml" />
     <author>
             <name>Jiajun</name>
-            <uri>https://www.jjyyblahblah.xyz/</uri>
+            <uri>https://jjyyblahblah.xyz/</uri>
             
                 <email>ofjiajun@gmail.com</email>
             </author>
@@ -18,8 +18,8 @@
     <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
         <entry>
             <title type="text">探索 MonoGame 的全新资源管理项目 (ContentBuilder)</title>
-            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/posts/post4/" />
-            <id>https://www.jjyyblahblah.xyz/posts/post4/</id>
+            <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post4/" />
+            <id>https://jjyyblahblah.xyz/posts/post4/</id>
             <updated>2026-04-22T09:27:47&#43;08:00</updated>
             <published>2026-04-22T09:00:22&#43;08:00</published>
             <author>
@@ -411,7 +411,7 @@
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
+                                <category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
                             
                         
                     
@@ -421,19 +421,19 @@
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/monogame/" term="Monogame" label="Monogame" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/monogame/" term="Monogame" label="Monogame" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/contentbuilder/" term="ContentBuilder" label="ContentBuilder" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/contentbuilder/" term="ContentBuilder" label="ContentBuilder" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/ngcb/" term="ngcb" label="ngcb" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/ngcb/" term="ngcb" label="ngcb" />
                             
                         
                             
@@ -447,8 +447,8 @@
     
         <entry>
             <title type="text">对 .NET MAUI 中的数据模板进行无障碍优化——以 CollectionView 为例</title>
-            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/posts/post3/" />
-            <id>https://www.jjyyblahblah.xyz/posts/post3/</id>
+            <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post3/" />
+            <id>https://jjyyblahblah.xyz/posts/post3/</id>
             <updated>2026-04-22T09:02:07&#43;08:00</updated>
             <published>2025-09-25T20:30:25&#43;08:00</published>
             <author>
@@ -549,7 +549,7 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
+                                <category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
                             
                         
                     
@@ -559,31 +559,31 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/.net-maui/" term=".NET MAUI" label=".NET MAUI" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/.net-maui/" term=".NET MAUI" label=".NET MAUI" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D/" term="无障碍" label="无障碍" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D/" term="无障碍" label="无障碍" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E5%B1%8F%E5%B9%95%E9%98%85%E8%AF%BB%E5%99%A8/" term="屏幕阅读器" label="屏幕阅读器" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/%E5%B1%8F%E5%B9%95%E9%98%85%E8%AF%BB%E5%99%A8/" term="屏幕阅读器" label="屏幕阅读器" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E6%A8%A1%E6%9D%BF/" term="数据模板" label="数据模板" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E6%A8%A1%E6%9D%BF/" term="数据模板" label="数据模板" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" term="数据绑定" label="数据绑定" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/" term="数据绑定" label="数据绑定" />
                             
                         
                     
@@ -593,8 +593,8 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
     
         <entry>
             <title type="text">在 Windows 上配置 LLVM工具链——Clang &#43; LLDB</title>
-            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/posts/post2/" />
-            <id>https://www.jjyyblahblah.xyz/posts/post2/</id>
+            <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post2/" />
+            <id>https://jjyyblahblah.xyz/posts/post2/</id>
             <updated>2025-09-25T20:33:52&#43;08:00</updated>
             <published>2025-07-25T15:07:02&#43;08:00</published>
             <author>
@@ -731,7 +731,7 @@ python310.dll&lt;br&gt;
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
+                                <category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
                             
                         
                     
@@ -741,31 +741,31 @@ python310.dll&lt;br&gt;
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/llvm/" term="llvm" label="llvm" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/llvm/" term="llvm" label="llvm" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/clang/" term="clang" label="clang" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/clang/" term="clang" label="clang" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/clang-/" term="clang&#43;&#43;" label="clang&#43;&#43;" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/clang-/" term="clang&#43;&#43;" label="clang&#43;&#43;" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/lldb/" term="lldb" label="lldb" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/lldb/" term="lldb" label="lldb" />
                             
                         
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/python/" term="python" label="python" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/python/" term="python" label="python" />
                             
                         
                     
@@ -775,8 +775,8 @@ python310.dll&lt;br&gt;
     
         <entry>
             <title type="text">Preface</title>
-            <link rel="alternate" type="text/html" href="https://www.jjyyblahblah.xyz/posts/post1/" />
-            <id>https://www.jjyyblahblah.xyz/posts/post1/</id>
+            <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post1/" />
+            <id>https://jjyyblahblah.xyz/posts/post1/</id>
             <updated>2025-07-23T16:20:20&#43;08:00</updated>
             <published>2025-07-22T20:23:27&#43;08:00</published>
             <author>
@@ -799,7 +799,7 @@ python310.dll&lt;br&gt;
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
+                                <category scheme="https://jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/" term="碎句与短章" label="碎句与短章" />
                             
                         
                     
@@ -809,7 +809,7 @@ python310.dll&lt;br&gt;
                             
                             
                             
-                                <category scheme="https://www.jjyyblahblah.xyz/tags/none/" term="None" label="None" />
+                                <category scheme="https://jjyyblahblah.xyz/tags/none/" term="None" label="None" />
                             
                         
                     

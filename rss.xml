@@ -7,8 +7,8 @@
 
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Jiajun Blah Blah</title>
-        <link>https://www.jjyyblahblah.xyz/</link>
+        <title>Jiajun&#39;s Blah Blah</title>
+        <link>https://jjyyblahblah.xyz/</link>
         <description>This is Jiajun&#39;s Blog.</description>
         <generator>Hugo 0.145.0 https://gohugo.io/</generator>
         
@@ -23,15 +23,15 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Wed, 22 Apr 2026 09:28:25 &#43;0800</lastBuildDate>
+        <lastBuildDate>Tue, 21 Jul 2026 10:32:06 &#43;0800</lastBuildDate>
         
-            <atom:link rel="self" type="application/rss&#43;xml" href="https://www.jjyyblahblah.xyz/rss.xml" />
+            <atom:link rel="self" type="application/rss&#43;xml" href="https://jjyyblahblah.xyz/rss.xml" />
         
         
             <item>
                 <title>探索 MonoGame 的全新资源管理项目 (ContentBuilder)</title>
-                <link>https://www.jjyyblahblah.xyz/posts/post4/</link>
-                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post4/</guid>
+                <link>https://jjyyblahblah.xyz/posts/post4/</link>
+                <guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post4/</guid>
                 <pubDate>Wed, 22 Apr 2026 09:00:22 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
@@ -419,7 +419,7 @@
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
+                                    <category domain="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
                                 
                             
                         
@@ -429,19 +429,19 @@
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/monogame/">Monogame</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/monogame/">Monogame</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/contentbuilder/">ContentBuilder</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/contentbuilder/">ContentBuilder</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/ngcb/">ngcb</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/ngcb/">ngcb</category>
                                 
                             
                                 
@@ -455,8 +455,8 @@
         
             <item>
                 <title>对 .NET MAUI 中的数据模板进行无障碍优化——以 CollectionView 为例</title>
-                <link>https://www.jjyyblahblah.xyz/posts/post3/</link>
-                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post3/</guid>
+                <link>https://jjyyblahblah.xyz/posts/post3/</link>
+                <guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post3/</guid>
                 <pubDate>Thu, 25 Sep 2025 20:30:25 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
@@ -553,7 +553,7 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
+                                    <category domain="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
                                 
                             
                         
@@ -563,31 +563,31 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/.net-maui/">.NET MAUI</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/.net-maui/">.NET MAUI</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D/">无障碍</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D/">无障碍</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/%E5%B1%8F%E5%B9%95%E9%98%85%E8%AF%BB%E5%99%A8/">屏幕阅读器</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/%E5%B1%8F%E5%B9%95%E9%98%85%E8%AF%BB%E5%99%A8/">屏幕阅读器</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E6%A8%A1%E6%9D%BF/">数据模板</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E6%A8%A1%E6%9D%BF/">数据模板</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/">数据绑定</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A/">数据绑定</category>
                                 
                             
                         
@@ -597,8 +597,8 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
         
             <item>
                 <title>在 Windows 上配置 LLVM工具链——Clang &#43; LLDB</title>
-                <link>https://www.jjyyblahblah.xyz/posts/post2/</link>
-                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post2/</guid>
+                <link>https://jjyyblahblah.xyz/posts/post2/</link>
+                <guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post2/</guid>
                 <pubDate>Fri, 25 Jul 2025 15:07:02 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
@@ -731,7 +731,7 @@ python310.dll&lt;br&gt;
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
+                                    <category domain="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category>
                                 
                             
                         
@@ -741,31 +741,31 @@ python310.dll&lt;br&gt;
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/llvm/">llvm</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/llvm/">llvm</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/clang/">clang</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/clang/">clang</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/clang-/">clang&#43;&#43;</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/clang-/">clang&#43;&#43;</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/lldb/">lldb</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/lldb/">lldb</category>
                                 
                             
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/python/">python</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/python/">python</category>
                                 
                             
                         
@@ -775,8 +775,8 @@ python310.dll&lt;br&gt;
         
             <item>
                 <title>Preface</title>
-                <link>https://www.jjyyblahblah.xyz/posts/post1/</link>
-                <guid isPermaLink="true">https://www.jjyyblahblah.xyz/posts/post1/</guid>
+                <link>https://jjyyblahblah.xyz/posts/post1/</link>
+                <guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post1/</guid>
                 <pubDate>Tue, 22 Jul 2025 20:23:27 &#43;0800</pubDate>
                 
                     <author>ofjiajun@gmail.com (Jiajun)</author>
@@ -795,7 +795,7 @@ python310.dll&lt;br&gt;
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
+                                    <category domain="https://jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category>
                                 
                             
                         
@@ -805,7 +805,7 @@ python310.dll&lt;br&gt;
                                 
                                 
                                 
-                                    <category domain="https://www.jjyyblahblah.xyz/tags/none/">None</category>
+                                    <category domain="https://jjyyblahblah.xyz/tags/none/">None</category>
                                 
                             
                         
