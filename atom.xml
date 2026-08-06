@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">Jiajun&#39;s Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s Blog.</subtitle>
-    <updated>2026-07-21T10:32:06&#43;08:00</updated>
+    <updated>2026-08-06T10:11:38&#43;08:00</updated>
     <id>https://jjyyblahblah.xyz/</id>
     <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/" />
     <link rel="self" type="application/atom&#43;xml" href="https://jjyyblahblah.xyz/atom.xml" />
@@ -17,10 +17,89 @@
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
         <entry>
+            <title type="text">更改 NuGet 的默认下载地址以转移 C 盘的存储压力</title>
+            <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post5/" />
+            <id>https://jjyyblahblah.xyz/posts/post5/</id>
+            <updated>2026-08-06T10:11:36&#43;08:00</updated>
+            <published>2026-08-06T09:42:51&#43;08:00</published>
+            <author>
+                    <name>Jiajun</name>
+                    <uri>https://ofjiajun.github.io/</uri>
+                    <email>ofjiajun@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            
+                <content type="html">&lt;p&gt;NuGet 是 .NET 生态系统的包管理器，是开发人员发现和获取 .NET 开源库的主要方式。它定义如何创建、托管和使用面向整个 .NET 平台的包。&lt;/p&gt;
+&lt;p&gt;在使用 NuGet 一段时间后，系统中难以避免的会积累许多缓存产物，大量占用磁盘空间。默认情况下，这些内容都集聚在系统盘 C 的忒定目录中。为了减轻 C 盘的存储压力，可以考虑将 NuGet 的默认下载或缓存位置移动到其他盘。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;查看默认存储位置&lt;/h2&gt;
+&lt;p&gt;首先，在命令行终端中键入&lt;br&gt;
+&lt;code&gt;dotnet nuget locals all --list&lt;/code&gt;&lt;br&gt;
+以查看目前 NuGet 的本地存储位置。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;dotnet nuget locals all --list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http-cache: C:\Users\username\AppData\Local\NuGet\v3-cache
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;global-packages: C:\Users\username\.nuget\packages
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;temp: C:\Users\username\AppData\Local\Temp\NuGetScratch
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;plugins-cache: C:\Users\username\AppData\Local\NuGet\plugins-cache
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2&gt;修改方法&lt;/h2&gt;
+&lt;p&gt;打开文件&lt;br&gt;
+&lt;code&gt;%appdata%\NuGet\NuGet.Config&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;如果要为 global packages 添加一条自定义配置，则编辑如下：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34;?&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;packageSources&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;add&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;key=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;nuget.org&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;value=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;https://api.nuget.org/v3/index.json&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;protocolVersion=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;3&amp;#34;&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;/packageSources&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;config&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;add&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;key=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;globalPackagesFolder&amp;#34;&lt;/span&gt; &lt;span class=&#34;na&#34;&gt;value=&lt;/span&gt;&lt;span class=&#34;s&#34;&gt;&amp;#34;D:\Users\username\.nuget\packages&amp;#34;&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;/&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;/config&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他配置可照此办理。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/tags/.net/" term=".NET" label=".NET" />
+                            
+                        
+                            
+                            
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/tags/nuget/" term="NuGet" label="NuGet" />
+                            
+                        
+                    
+                
+            
+        </entry>
+    
+        <entry>
             <title type="text">探索 MonoGame 的全新资源管理项目 (ContentBuilder)</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post4/" />
             <id>https://jjyyblahblah.xyz/posts/post4/</id>
-            <updated>2026-04-22T09:27:47&#43;08:00</updated>
+            <updated>2026-08-06T09:46:18&#43;08:00</updated>
             <published>2026-04-22T09:00:22&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
@@ -29,7 +108,7 @@
                     </author>
             <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
             
-                <content type="html">&lt;p&gt;新的内容管理 (Content Builder Project) 类似于自己写一个命令行内容管理工具。&lt;/p&gt;
+                <content type="html">&lt;p&gt;MonoGame 新的内容管理 (Content Builder Project) 类似于自己写一个命令行内容管理工具。&lt;/p&gt;
 &lt;p&gt;使用这个特性要求使用 3.8.5+ 的版本，现在是预览版。&lt;/p&gt;
 &lt;p&gt;安装这套项目模板的方式如下：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-cmd&#34; data-lang=&#34;cmd&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;dotnet new install MonoGame.Templates.CSharp@3.8.*-preview.*
