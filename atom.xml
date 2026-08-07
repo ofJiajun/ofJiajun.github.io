@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">Jiajun&#39;s Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s Blog.</subtitle>
-    <updated>2026-08-07T11:16:16&#43;08:00</updated>
+    <updated>2026-08-07T11:29:30&#43;08:00</updated>
     <id>https://jjyyblahblah.xyz/</id>
     <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/" />
     <link rel="self" type="application/atom&#43;xml" href="https://jjyyblahblah.xyz/atom.xml" />
@@ -16,6 +16,106 @@
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator>
+        <entry>
+            <title type="text">配置 WSL2 中的 ASP.NET WebAPI 服务，以供局域网内其他设备进行测试</title>
+            <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post6/" />
+            <id>https://jjyyblahblah.xyz/posts/post6/</id>
+            <updated>2026-08-07T11:28:48&#43;08:00</updated>
+            <published>2026-08-06T10:24:14&#43;08:00</published>
+            <author>
+                    <name>Jiajun</name>
+                    <uri>https://ofjiajun.github.io/</uri>
+                    <email>ofjiajun@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            
+                <content type="html">&lt;h2&gt;问题空间&lt;/h2&gt;
+&lt;p&gt;我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href=&#34;http://localhost:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:port&lt;/a&gt; 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href=&#34;http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://宿主机IP:port&lt;/a&gt; 测试该服务则不是天然可行的。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2&gt;设置方法&lt;/h2&gt;
+&lt;h3&gt;更改 WSL2 的网络设置&lt;/h3&gt;
+&lt;p&gt;首先改变 WSL2 的网络设置，使 WSL2 与宿主机共享一个局域网 IP 。&lt;/p&gt;
+&lt;p&gt;在开始菜单下找到 &lt;strong&gt;WSL Settings&lt;/strong&gt; ，打开后选择 &lt;strong&gt;网络&lt;/strong&gt;。在网络模式的组合框中，更改 WSL 的网络模式为 &lt;strong&gt;Mirrored&lt;/strong&gt; 。&lt;/p&gt;
+&lt;p&gt;随后选中 &lt;strong&gt;主机地址环回&lt;/strong&gt; toggle button 。该模式仅仅适用于 Mirrored 模式。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;仅当 wsl2.networkingMode 设置为镜像时适用。设置为 True 时，将允许容器通过分配给主机的 IP 地址连接到主机或主机连接到容器。请注意，始终可以使用 127.0.0.1 环回地址 - 此选项还允许使用所有额外分配的本地 IP 地址。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;设置完成后，使用管理员权限打开命令行终端，键入&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-powershell&#34; data-lang=&#34;powershell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;wsl&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;-shutdown&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;关闭正在运行的 WSL 实例，然后重新启动实例，配置即告成功。&lt;/p&gt;
+&lt;h3&gt;更改项目的监听 IP&lt;/h3&gt;
+&lt;p&gt;默认情况下， APS.NET Core Web API 只监听 localhost (127.0.0.1) 。为了让服务对他人可见，必须对此行为进行配置。可以使用 nginx 做一个转发。为了简便起见，这里采取修改程序设置，监听 &lt;code&gt;0.0.0.0:port&lt;/code&gt; 的策略。&lt;/p&gt;
+&lt;p&gt;在项目根目录下打开
+appsettings.json 或者 appsettings.Development.json 。在配置中添加如下键值：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-settings.json&#34; data-lang=&#34;settings.json&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;#34;Kestrel&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;#34;Endpoints&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nt&#34;&gt;&amp;#34;Http&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nt&#34;&gt;&amp;#34;Url&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;http://0.0.0.0:5249&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;},&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;...&lt;/span&gt; &lt;span class=&#34;err&#34;&gt;其他配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3&gt;配置防火墙入站规则&lt;/h3&gt;
+&lt;p&gt;有时候其他设备发起的请求会被本机肪火墙拦截，因此最好配置一条入站规则，放行项目的监听端口，以便局域网内其他设备可以通过“宿主机 IP : 配置的端口号”正常访问服务。&lt;/p&gt;
+&lt;p&gt;Win + R 打开运行对话框，输入&lt;br&gt;
+&lt;code&gt;wf.msc&lt;/code&gt; 回车确认，。在打开的&lt;br&gt;
+&lt;strong&gt;Windows Defender Firewall with Advanced Security&lt;/strong&gt; 窗口中选择&lt;br&gt;
+&lt;strong&gt;Inbound Rules&lt;/strong&gt; 。右键菜单选择&lt;br&gt;
+&lt;strong&gt;New Rule... n&lt;/strong&gt; 在列表中新增一条规则。在弹出的设置向导中，指定规则类型为&lt;br&gt;
+&lt;strong&gt;Port （端口）&lt;/strong&gt;。点击下一步，然后输入服务的端口号。一路默认下一步，直到完成页，为规则取一个易于识别的名称，确认无误后点击完成即可。&lt;/p&gt;
+</content>
+            
+            
+            
+            
+            
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧" />
+                            
+                        
+                    
+                
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/tags/asp.net-core/" term="ASP.NET Core" label="ASP.NET Core" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/tags/.net/" term=".NET" label=".NET" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/tags/wsl/" term="WSL" label="WSL" />
+                            
+                        
+                            
+                            
+                            
+                                <category scheme="https://jjyyblahblah.xyz/tags/wsl2/" term="WSL2" label="WSL2" />
+                            
+                        
+                            
+                            
+                            
+                        
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">更改 NuGet 的默认下载地址以转移 C 盘的存储压力</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post5/" />
