@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">Jiajun&#39;s Blah Blah</title>
     <subtitle type="html">This is Jiajun&#39;s Blog.</subtitle>
-    <updated>2026-08-07T11:29:30&#43;08:00</updated>
+    <updated>2026-08-07T12:31:46&#43;08:00</updated>
     <id>https://jjyyblahblah.xyz/</id>
     <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/" />
     <link rel="self" type="application/atom&#43;xml" href="https://jjyyblahblah.xyz/atom.xml" />
@@ -20,17 +20,18 @@
             <title type="text">配置 WSL2 中的 ASP.NET WebAPI 服务，以供局域网内其他设备进行测试</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post6/" />
             <id>https://jjyyblahblah.xyz/posts/post6/</id>
-            <updated>2026-08-07T11:28:48&#43;08:00</updated>
+            <updated>2026-08-07T12:22:12&#43;08:00</updated>
             <published>2026-08-06T10:24:14&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p&gt;&lt;strong&gt;问题空间&lt;/strong&gt;：&lt;br&gt;
+我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href=&#34;http://localhost:port&#34;&gt;http://localhost:port&lt;/a&gt; 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href=&#34;http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port&#34;&gt;http://宿主机IP:port&lt;/a&gt; 测试该服务则不是天然可行的。&lt;/p&gt;</summary>
             
-                <content type="html">&lt;h2&gt;问题空间&lt;/h2&gt;
-&lt;p&gt;我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href=&#34;http://localhost:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:port&lt;/a&gt; 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href=&#34;http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://宿主机IP:port&lt;/a&gt; 测试该服务则不是天然可行的。&lt;/p&gt;
+                <content type="html">&lt;p&gt;&lt;strong&gt;问题空间&lt;/strong&gt;：&lt;br&gt;
+我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href=&#34;http://localhost:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:port&lt;/a&gt; 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href=&#34;http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://宿主机IP:port&lt;/a&gt; 测试该服务则不是天然可行的。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2&gt;设置方法&lt;/h2&gt;
 &lt;h3&gt;更改 WSL2 的网络设置&lt;/h3&gt;
@@ -64,6 +65,7 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
 &lt;strong&gt;Inbound Rules&lt;/strong&gt; 。右键菜单选择&lt;br&gt;
 &lt;strong&gt;New Rule... n&lt;/strong&gt; 在列表中新增一条规则。在弹出的设置向导中，指定规则类型为&lt;br&gt;
 &lt;strong&gt;Port （端口）&lt;/strong&gt;。点击下一步，然后输入服务的端口号。一路默认下一步，直到完成页，为规则取一个易于识别的名称，确认无误后点击完成即可。&lt;/p&gt;
+&lt;p&gt;Over.&lt;/p&gt;
 </content>
             
             
@@ -120,14 +122,14 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
             <title type="text">更改 NuGet 的默认下载地址以转移 C 盘的存储压力</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post5/" />
             <id>https://jjyyblahblah.xyz/posts/post5/</id>
-            <updated>2026-08-06T10:11:36&#43;08:00</updated>
+            <updated>2026-08-07T12:21:49&#43;08:00</updated>
             <published>2026-08-06T09:42:51&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p&gt;NuGet 是 .NET 生态系统的包管理器，是开发人员发现和获取 .NET 开源库的主要方式。它定义如何创建、托管和使用面向整个 .NET 平台的包。&lt;/p&gt;</summary>
             
                 <content type="html">&lt;p&gt;NuGet 是 .NET 生态系统的包管理器，是开发人员发现和获取 .NET 开源库的主要方式。它定义如何创建、托管和使用面向整个 .NET 平台的包。&lt;/p&gt;
 &lt;p&gt;在使用 NuGet 一段时间后，系统中难以避免的会积累许多缓存产物，大量占用磁盘空间。默认情况下，这些内容都集聚在系统盘 C 的忒定目录中。为了减轻 C 盘的存储压力，可以考虑将 NuGet 的默认下载或缓存位置移动到其他盘。&lt;/p&gt;
@@ -155,6 +157,7 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;/config&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他配置可照此办理。&lt;/p&gt;
+&lt;p&gt;End.&lt;/p&gt;
 </content>
             
             
@@ -199,14 +202,15 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
             <title type="text">探索 MonoGame 的全新资源管理项目 (ContentBuilder)</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post4/" />
             <id>https://jjyyblahblah.xyz/posts/post4/</id>
-            <updated>2026-08-06T09:46:18&#43;08:00</updated>
+            <updated>2026-08-07T12:21:35&#43;08:00</updated>
             <published>2026-04-22T09:00:22&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p&gt;MonoGame 新的内容管理 (Content Builder Project) 类似于自己写一个命令行内容管理工具。&lt;/p&gt;
+&lt;p&gt;使用这个特性要求使用 3.8.5+ 的版本，现在是预览版。&lt;/p&gt;</summary>
             
                 <content type="html">&lt;p&gt;MonoGame 新的内容管理 (Content Builder Project) 类似于自己写一个命令行内容管理工具。&lt;/p&gt;
 &lt;p&gt;使用这个特性要求使用 3.8.5+ 的版本，现在是预览版。&lt;/p&gt;
@@ -628,14 +632,14 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
             <title type="text">对 .NET MAUI 中的数据模板进行无障碍优化——以 CollectionView 为例</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post3/" />
             <id>https://jjyyblahblah.xyz/posts/post3/</id>
-            <updated>2026-04-22T09:02:07&#43;08:00</updated>
+            <updated>2026-08-07T12:21:08&#43;08:00</updated>
             <published>2025-09-25T20:30:25&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p&gt;在利用 .NET MAUI 攒 UI 时，利用列表控件如 ListView 和 CollectionView 项目绑定数据模型是很常见的操作。只不过，直接应用的数据模板对屏幕阅读器用户并不友好（至少不是所有平台都友好），比如下面的 Page：&lt;/p&gt;</summary>
             
                 <content type="html">&lt;p&gt;在利用 .NET MAUI 攒 UI 时，利用列表控件如 ListView 和 CollectionView 项目绑定数据模型是很常见的操作。只不过，直接应用的数据模板对屏幕阅读器用户并不友好（至少不是所有平台都友好），比如下面的 Page：&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code class=&#34;language-xaml&#34; data-lang=&#34;xaml&#34;&gt;&amp;lt;?xml version=&amp;#34;1.0&amp;#34; encoding=&amp;#34;utf-8&amp;#34; ?&amp;gt;
@@ -716,6 +720,7 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
 &lt;li&gt;Hint&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;需要注意的是， &lt;code&gt;SemanticProperties&lt;/code&gt; 提供的信息有时候会覆盖控件本身的内容。比如同时为 &lt;code&gt;Button&lt;/code&gt; 控件添加 &lt;code&gt;Text&lt;/code&gt; 和 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 。这时，屏幕阅读器朗读的不是 &lt;code&gt;Text&lt;/code&gt; 的值而是 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 的值。在这种情况下，最好的做法是 为 &lt;code&gt;Button&lt;/code&gt; 添加 &lt;code&gt;Text&lt;/code&gt; 属性，给出有意义的按钮名称；然后，如果有必要，添加 &lt;code&gt;SemanticProperties.Hint&lt;/code&gt; 属性，给出控件的帮助信息或其他详情。当然，这些信息都不是肉眼可见的，仅仅对辅助技术用户获取信息有益。&lt;/p&gt;
+&lt;p&gt;End.&lt;/p&gt;
 </content>
             
             
@@ -774,14 +779,15 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
             <title type="text">在 Windows 上配置 LLVM工具链——Clang &#43; LLDB</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post2/" />
             <id>https://jjyyblahblah.xyz/posts/post2/</id>
-            <updated>2025-09-25T20:33:52&#43;08:00</updated>
+            <updated>2026-08-07T12:21:18&#43;08:00</updated>
             <published>2025-07-25T15:07:02&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">No description</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p&gt;本文概述如何在 Windows11 上配置 LLVM ，从而在 Windows 平台上启用 Clang + LLDB 的编译调适工具链。&lt;/p&gt;
+&lt;p&gt;操作的平台（供参考）：Windows 11 24H2 (AMD64) build 26100.4351&lt;/p&gt;</summary>
             
                 <content type="html">&lt;p&gt;本文概述如何在 Windows11 上配置 LLVM ，从而在 Windows 平台上启用 Clang + LLDB 的编译调适工具链。&lt;/p&gt;
 &lt;p&gt;操作的平台（供参考）：Windows 11 24H2 (AMD64) build 26100.4351&lt;/p&gt;
@@ -897,7 +903,7 @@ python310.dll&lt;br&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;lldb --version
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lldb version 20.1.0
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;End&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;End.&lt;/p&gt;
 </content>
             
             
@@ -956,14 +962,14 @@ python310.dll&lt;br&gt;
             <title type="text">Preface</title>
             <link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post1/" />
             <id>https://jjyyblahblah.xyz/posts/post1/</id>
-            <updated>2025-07-23T16:20:20&#43;08:00</updated>
+            <updated>2026-08-07T12:20:34&#43;08:00</updated>
             <published>2025-07-22T20:23:27&#43;08:00</published>
             <author>
                     <name>Jiajun</name>
                     <uri>https://ofjiajun.github.io/</uri>
                     <email>ofjiajun@gmail.com</email>
                     </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">Get started</summary>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p&gt;Man, know yourself.&lt;/p&gt;</summary>
             
                 <content type="html">&lt;p&gt;Man, know yourself.&lt;/p&gt;
 </content>
