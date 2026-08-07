@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Fri, 07 Aug 2026 11:29:30 &#43;0800</lastBuildDate>
+        <lastBuildDate>Fri, 07 Aug 2026 12:31:46 &#43;0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss&#43;xml" href="https://jjyyblahblah.xyz/rss.xml" />
         
@@ -37,8 +37,8 @@
                     <author>ofjiajun@gmail.com (Jiajun)</author>
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                <description>&lt;h2&gt;问题空间&lt;/h2&gt;
-&lt;p&gt;我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href=&#34;http://localhost:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:port&lt;/a&gt; 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href=&#34;http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://宿主机IP:port&lt;/a&gt; 测试该服务则不是天然可行的。&lt;/p&gt;
+                <description>&lt;p&gt;&lt;strong&gt;问题空间&lt;/strong&gt;：&lt;br&gt;
+我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href=&#34;http://localhost:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://localhost:port&lt;/a&gt; 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href=&#34;http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;http://宿主机IP:port&lt;/a&gt; 测试该服务则不是天然可行的。&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2&gt;设置方法&lt;/h2&gt;
 &lt;h3&gt;更改 WSL2 的网络设置&lt;/h3&gt;
@@ -72,6 +72,7 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
 &lt;strong&gt;Inbound Rules&lt;/strong&gt; 。右键菜单选择&lt;br&gt;
 &lt;strong&gt;New Rule... n&lt;/strong&gt; 在列表中新增一条规则。在弹出的设置向导中，指定规则类型为&lt;br&gt;
 &lt;strong&gt;Port （端口）&lt;/strong&gt;。点击下一步，然后输入服务的端口号。一路默认下一步，直到完成页，为规则取一个易于识别的名称，确认无误后点击完成即可。&lt;/p&gt;
+&lt;p&gt;Over.&lt;/p&gt;
 </description>
                 
                 
@@ -159,6 +160,7 @@ appsettings.json 或者 appsettings.Development.json 。在配置中添加如下
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;lt;/config&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;其他配置可照此办理。&lt;/p&gt;
+&lt;p&gt;End.&lt;/p&gt;
 </description>
                 
                 
@@ -712,6 +714,7 @@ ContentPage xmlns=&amp;#34;http://schemas.microsoft.com/dotnet/2021/maui&amp;#34
 &lt;li&gt;Hint&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;需要注意的是， &lt;code&gt;SemanticProperties&lt;/code&gt; 提供的信息有时候会覆盖控件本身的内容。比如同时为 &lt;code&gt;Button&lt;/code&gt; 控件添加 &lt;code&gt;Text&lt;/code&gt; 和 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 。这时，屏幕阅读器朗读的不是 &lt;code&gt;Text&lt;/code&gt; 的值而是 &lt;code&gt;SemanticProperties.Description&lt;/code&gt; 的值。在这种情况下，最好的做法是 为 &lt;code&gt;Button&lt;/code&gt; 添加 &lt;code&gt;Text&lt;/code&gt; 属性，给出有意义的按钮名称；然后，如果有必要，添加 &lt;code&gt;SemanticProperties.Hint&lt;/code&gt; 属性，给出控件的帮助信息或其他详情。当然，这些信息都不是肉眼可见的，仅仅对辅助技术用户获取信息有益。&lt;/p&gt;
+&lt;p&gt;End.&lt;/p&gt;
 </description>
                 
                 
@@ -889,7 +892,7 @@ python310.dll&lt;br&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;lldb --version
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lldb version 20.1.0
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;End&lt;/p&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;End.&lt;/p&gt;
 </description>
                 
                 
