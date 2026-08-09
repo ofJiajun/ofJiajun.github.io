@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jiajun's Blah Blah</title><link>https://jjyyblahblah.xyz/</link><description>This is Jiajun's Blog.</description><generator>Hugo 0.145.0 https://gohugo.io/</generator><language>zh-CN</language><managingEditor>ofjiajun@gmail.com (Jiajun)</managingEditor><webMaster>ofjiajun@gmail.com (Jiajun)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><lastBuildDate>Sun, 09 Aug 2026 10:42:32 +0800</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://jjyyblahblah.xyz/rss.xml"/><item><title>Python 的方法注入</title><link>https://jjyyblahblah.xyz/posts/post7/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post7/</guid><pubDate>Sun, 09 Aug 2026 09:55:49 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jiajun's Blah Blah</title><link>https://jjyyblahblah.xyz/</link><description>This is Jiajun's Blog.</description><generator>Hugo 0.145.0 https://gohugo.io/</generator><language>zh-CN</language><managingEditor>ofjiajun@gmail.com (Jiajun)</managingEditor><webMaster>ofjiajun@gmail.com (Jiajun)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><lastBuildDate>Sun, 09 Aug 2026 10:51:55 +0800</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://jjyyblahblah.xyz/rss.xml"/><item><title>Python 中的方法注入</title><link>https://jjyyblahblah.xyz/posts/post7/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post7/</guid><pubDate>Sun, 09 Aug 2026 09:55:49 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p>
 &lt;p>下面是一些常见的方法注入写法：&lt;/p>
 &lt;hr>
 &lt;h2>一、给&lt;strong>类&lt;/strong>注入方法&lt;/h2>
@@ -67,9 +67,11 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Doing something
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
 &lt;h2>提示&lt;/h2>
-&lt;p>滥用方法注入会破坏封装性，增加调试难度1. 。
-2. 适合作为临时方案，用于快速修复第三方库的问题；或在编写测试代码时 mock 某些行为； 又或者 AOP（面向切面编程）风格的功能扩展（如日志、权限检查等）。
-3. 工具没有善恶，恰当的使用即可。&lt;/p>
+&lt;ol>
+&lt;li>滥用方法注入会破坏封装性，增加调试难度。&lt;/li>
+&lt;li>适合作为临时方案，用于快速修复第三方库的问题；或在编写测试代码时 mock 某些行为； 又或者 AOP（面向切面编程）风格的功能扩展（如日志、权限检查等）。&lt;/li>
+&lt;li>工具没有善恶，恰当的使用即可。&lt;/li>
+&lt;/ol>
 &lt;p>End.&lt;/p></description><category domain="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category><category domain="https://jjyyblahblah.xyz/tags/python/">Python</category><category domain="https://jjyyblahblah.xyz/tags/%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5/">方法注入</category><category domain="https://jjyyblahblah.xyz/tags/monkey-patching/">monkey patching</category></item><item><title>配置 WSL2 中的 ASP.NET WebAPI 服务，以供局域网内其他设备进行测试</title><link>https://jjyyblahblah.xyz/posts/post6/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post6/</guid><pubDate>Thu, 06 Aug 2026 10:24:14 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>&lt;strong>问题空间&lt;/strong>：&lt;br>
 我在 WSL2 (Ubuntu) 中编写了一个 ASP.NET Core Web API。默认情况下，该服务可以在宿主机中通过地址 &lt;a href="http://localhost:port" target="_blank" rel="noopener">http://localhost:port&lt;/a> 进行访问和测试。然而，如果希望让服务对局域网内其他设备可见，即局域网内其他设备可以通过 &lt;a href="http://%E5%AE%BF%E4%B8%BB%E6%9C%BAIP:port" target="_blank" rel="noopener">http://宿主机IP:port&lt;/a> 测试该服务则不是天然可行的。&lt;/p>
 &lt;hr>
