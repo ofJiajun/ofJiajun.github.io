@@ -2,33 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://jjyyblahblah.xyz/categories/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/tags/monkey-patching/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/posts/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/tags/python/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/posts/post7/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/tags/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/tags/%E6%96%B9%E6%B3%95%E6%B3%A8%E5%85%A5/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
-    <loc>https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/</loc>
-    <lastmod>2026-08-09T10:26:52+08:00</lastmod>
-  </url><url>
     <loc>https://jjyyblahblah.xyz/tags/.net/</loc>
     <lastmod>2026-08-07T12:22:12+08:00</lastmod>
   </url><url>
@@ -38,6 +11,18 @@
     <loc>https://jjyyblahblah.xyz/tags/c/</loc>
     <lastmod>2026-08-07T12:22:12+08:00</lastmod>
   </url><url>
+    <loc>https://jjyyblahblah.xyz/categories/</loc>
+    <lastmod>2026-08-07T12:22:12+08:00</lastmod>
+  </url><url>
+    <loc>https://jjyyblahblah.xyz/</loc>
+    <lastmod>2026-08-07T12:22:12+08:00</lastmod>
+  </url><url>
+    <loc>https://jjyyblahblah.xyz/posts/</loc>
+    <lastmod>2026-08-07T12:22:12+08:00</lastmod>
+  </url><url>
+    <loc>https://jjyyblahblah.xyz/tags/</loc>
+    <lastmod>2026-08-07T12:22:12+08:00</lastmod>
+  </url><url>
     <loc>https://jjyyblahblah.xyz/tags/wsl/</loc>
     <lastmod>2026-08-07T12:22:12+08:00</lastmod>
   </url><url>
@@ -45,6 +30,9 @@
     <lastmod>2026-08-07T12:22:12+08:00</lastmod>
   </url><url>
     <loc>https://jjyyblahblah.xyz/posts/post6/</loc>
+    <lastmod>2026-08-07T12:22:12+08:00</lastmod>
+  </url><url>
+    <loc>https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/</loc>
     <lastmod>2026-08-07T12:22:12+08:00</lastmod>
   </url><url>
     <loc>https://jjyyblahblah.xyz/tags/nuget/</loc>
@@ -93,6 +81,9 @@
     <lastmod>2026-08-07T12:21:18+08:00</lastmod>
   </url><url>
     <loc>https://jjyyblahblah.xyz/tags/llvm/</loc>
+    <lastmod>2026-08-07T12:21:18+08:00</lastmod>
+  </url><url>
+    <loc>https://jjyyblahblah.xyz/tags/python/</loc>
     <lastmod>2026-08-07T12:21:18+08:00</lastmod>
   </url><url>
     <loc>https://jjyyblahblah.xyz/posts/post2/</loc>
