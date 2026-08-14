@@ -1,4 +1,120 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">Jiajun's Blah Blah</title><subtitle type="html">This is Jiajun's Blog.</subtitle><updated>2026-08-09T10:51:55+08:00</updated><id>https://jjyyblahblah.xyz/</id><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/"/><link rel="self" type="application/atom+xml" href="https://jjyyblahblah.xyz/atom.xml"/><author><name>Jiajun</name><uri>https://jjyyblahblah.xyz/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator><entry><title type="text">Python 中的方法注入</title><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post7/"/><id>https://jjyyblahblah.xyz/posts/post7/</id><updated>2026-08-09T10:51:42+08:00</updated><published>2026-08-09T09:55:49+08:00</published><author><name>Jiajun</name><uri>https://ofjiajun.github.io/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p></summary><content type="html">&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">Jiajun's Blah Blah</title><subtitle type="html">This is Jiajun's Blog.</subtitle><updated>2026-08-14T17:11:12+08:00</updated><id>https://jjyyblahblah.xyz/</id><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/"/><link rel="self" type="application/atom+xml" href="https://jjyyblahblah.xyz/atom.xml"/><author><name>Jiajun</name><uri>https://jjyyblahblah.xyz/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator><entry><title type="text">WSL 虚拟磁盘（ext4.vhdx） 的迁移与压缩</title><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post8/"/><id>https://jjyyblahblah.xyz/posts/post8/</id><updated>2026-08-14T17:09:56+08:00</updated><published>2026-08-14T15:52:15+08:00</published><author><name>Jiajun</name><uri>https://ofjiajun.github.io/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p>WSL2 的整个 Linux 系统（包括代码、环境、数据等）都存储在一个名为 ext4.vhdx 的虚拟硬盘文件中。
+该文件一般位于 &lt;code>%localappdata%\Packages&lt;/code> 目录下的某个文件夹中，具体取决于发行版比如
+&lt;code>%localappdata%\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState&lt;/code>&lt;/p></summary><content type="html">&lt;p>WSL2 的整个 Linux 系统（包括代码、环境、数据等）都存储在一个名为 ext4.vhdx 的虚拟硬盘文件中。
+该文件一般位于 &lt;code>%localappdata%\Packages&lt;/code> 目录下的某个文件夹中，具体取决于发行版比如
+&lt;code>%localappdata%\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState&lt;/code>&lt;/p>
+&lt;p>这个文件采用的是“动态扩展”机制，初始体积很小，但随着用户在 Linux 中不断写入数据，它会自动扩容。然而，它不会自动收缩。&lt;/p>
+&lt;p>当我们在 WSL 内部删除文件时， Linux 文件系统只是在内部将这些空间“标记为可用（可复用）”，但并没有真正把这部分物理空间归还给 Windows 系统。&lt;/p>
+&lt;p>考虑到磁盘的存储压力，我们可以采取&lt;/p>
+&lt;ol>
+&lt;li>将虚拟磁盘文件移出 C 盘；&lt;/li>
+&lt;li>压缩虚拟磁盘文件，将空闲空间归还实体硬盘&lt;/li>
+&lt;/ol>
+&lt;p>两方面的措施进行优化。&lt;/p>
+&lt;p>手动压缩虚拟磁盘，就是利用 Windows 的底层工具（如 diskpart 或 Optimize-VHD），去扫描这个 .vhdx 文件中那些被 Linux 标记为“空闲”的区域，然后将它们真正截断并释放，归还给 Windows 的 C 盘或其他系统盘。&lt;/p>
+&lt;h2>迁移&lt;/h2>
+&lt;p>迁移分为备份导出，注销，导入和用户设置几个步骤。&lt;/p>
+&lt;h3>备份打包&lt;/h3>
+&lt;p>确定需要操作的 WSL 发行版。&lt;/p>
+&lt;p>Win + X 选择
+&lt;code>Terminal (Admin)&lt;/code> 使用管理员权限打开 Powershell 。&lt;/p>
+&lt;p>查看发行版名称&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nf">wsl&lt;/span> &lt;span class="nf">-l&lt;/span> &lt;span class="nf">-v&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">*&lt;/span> &lt;span class="nf">Ubuntu-24.04&lt;/span> &lt;span class="nf">Stopped&lt;/span> &lt;span class="mf">2&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果实例处于运行状态，使用如下指令彻底关闭 它：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span>&lt;span class="nf">wsl&lt;/span> &lt;span class="nf">--shutdown&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>将当前的 WSL 发行版打包为 .tar 文件，作为备份导出。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">--export&lt;/span> &lt;span class="nf">Ubuntu-24.04&lt;/span> &lt;span class="nf">G:\wsl-backup.tar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Export&lt;/span> &lt;span class="nf">in&lt;/span> &lt;span class="nf">progress,&lt;/span> &lt;span class="nf">this&lt;/span> &lt;span class="nf">may&lt;/span> &lt;span class="nf">take&lt;/span> &lt;span class="nf">a&lt;/span> &lt;span class="nf">few&lt;/span> &lt;span class="nf">minutes.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">...&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">The&lt;/span> &lt;span class="nf">operation&lt;/span> &lt;span class="nf">completed&lt;/span> &lt;span class="nf">successfully.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3>注销和释放&lt;/h3>
+&lt;p>确认备份文件已成功生成且大小正常后，注销 C 盘原有的 WSL 系统以释放空间。这个操作会永久删除 C 盘上的原系统数据，请务必确保上一步导出成功：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">--unregister&lt;/span> &lt;span class="nf">Ubuntu-24.04&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Unregistering.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">The&lt;/span> &lt;span class="nf">operation&lt;/span> &lt;span class="nf">completed&lt;/span> &lt;span class="nf">successfully.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3>镜像导入&lt;/h3>
+&lt;p>在目标盘符下创建一个用于存放 WSL 的文件夹如：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">mkdir&lt;/span> &lt;span class="nf">G:\WSL\Ubuntu&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nf">Directory:&lt;/span> &lt;span class="nf">G:\WSL&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Mode&lt;/span> &lt;span class="nf">LastWriteTime&lt;/span> &lt;span class="nf">Length&lt;/span> &lt;span class="nf">Name&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">----&lt;/span> &lt;span class="nf">-------------&lt;/span> &lt;span class="nf">------&lt;/span> &lt;span class="nf">----&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">d-----&lt;/span> &lt;span class="mf">8&lt;/span>&lt;span class="nv">/14/2026&lt;/span> &lt;span class="nf">3:05&lt;/span> &lt;span class="nf">PM&lt;/span> &lt;span class="nf">Ubuntu&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后执行导入命令：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">--import&lt;/span> &lt;span class="nf">Ubuntu-24.04&lt;/span> &lt;span class="nf">G:\WSL\Ubuntu&lt;/span> &lt;span class="nf">G:\wsl-backup.tar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Import&lt;/span> &lt;span class="nf">in&lt;/span> &lt;span class="nf">progress,&lt;/span> &lt;span class="nf">this&lt;/span> &lt;span class="nf">may&lt;/span> &lt;span class="nf">take&lt;/span> &lt;span class="nf">a&lt;/span> &lt;span class="nf">few&lt;/span> &lt;span class="nf">minutes.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">The&lt;/span> &lt;span class="nf">operation&lt;/span> &lt;span class="nf">completed&lt;/span> &lt;span class="nf">successfully.&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3>设置默认登录账户&lt;/h3>
+&lt;p>通过 &lt;code>--import&lt;/code> 导入的系统，默认会以 root 用户启动。为了恢复之前的普通用户，需要进入系统重新配置：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">-d&lt;/span> &lt;span class="nf">Ubuntu-24.04&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果提示符显示为 root@，则应采取以下步骤修改默认登录用户：&lt;/p>
+&lt;p>第一部，使用 vim or nano 新建或编辑 &lt;code>/etc/wsl.conf&lt;/code>：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo nano /etc/wsl.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>文件内容类似这样：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">[boot]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">systemd=true
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[network]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">hostname = PCOfYourself
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">generateHosts = false
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"># 把 default 的值改为某个账户的名称
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">[user]
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">default = YourName
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>用户名必须指向系统中已经创建的账户。若不确定系统中有哪些账户，可以在修改前通过如下指令查看：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ cat /etc/passwd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>第二步，重启 WSL：&lt;/p>
+&lt;p>修改完成后保存，回到 shell 界面，输入 &lt;code>exit&lt;/code> 退回 Powershell 界面，彻底关闭 WSL：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">--shutdown&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后在重启：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">-d&lt;/span> &lt;span class="nf">Ubuntu-24.04&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>就可以看到输入提示从 root 改为了特定的普通账户名。&lt;/p>
+&lt;h2>压缩&lt;/h2>
+&lt;h3>执行空闲清零&lt;/h3>
+&lt;p>为了让压缩工具能够精准识别哪些空间是真正空闲的，在执行压缩前，通常需要在 WSL 内部先执行
+&lt;code>sudo fstrim -av&lt;/code>
+命令。这个命令会将未使用的块彻底清零，从而大幅提升后续的压缩效果。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo fstrim -av
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">/: 976.8 GiB &lt;span class="o">(&lt;/span>&lt;span class="m">1048844808192&lt;/span> bytes&lt;span class="o">)&lt;/span> trimmed on /dev/sdc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>关闭 WSL 然后查看虚拟磁盘文件位置：&lt;/p>
+&lt;p>在 WSL 中执行：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">exit&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">logout&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>回到 Powershell 中执行：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">wsl&lt;/span> &lt;span class="nf">--shutdown&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>然后查看虚拟磁盘文件的路径：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">Get-ChildItem&lt;/span> &lt;span class="nf">-Path&lt;/span> &lt;span class="nf">HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss\&lt;/span> &lt;span class="nf">|&lt;/span> &lt;span class="nf">ForEach-Object&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="nf">$distro&lt;/span> &lt;span class="nf">=&lt;/span> &lt;span class="nf">Get-ItemProperty&lt;/span> &lt;span class="nf">$_.PSPath&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="nf">PSCustomObject&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="nf">@&lt;/span>&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="nf">DistroName&lt;/span> &lt;span class="nf">=&lt;/span> &lt;span class="nf">$distro.DistributionName&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="nf">VHDXPath&lt;/span> &lt;span class="nf">=&lt;/span> &lt;span class="nf">$distro.BasePath&lt;/span> &lt;span class="nf">+&lt;/span> &lt;span class="nf">&amp;#34;\ext4.vhdx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DistroName&lt;/span> &lt;span class="nf">VHDXPath&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">----------&lt;/span> &lt;span class="nf">--------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Ubuntu-24.04&lt;/span> &lt;span class="nf">\\?\G:\WSL\Ubuntu\ext4.vhdx&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3>执行压缩优化&lt;/h3>
+&lt;p>实际优化时可以选择如下两种工具：&lt;/p>
+&lt;h4>使用 diskpart&lt;/h4>
+&lt;p>下面是完整的执行步骤和示例输出：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">diskpart&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DISKPART&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">select&lt;/span> &lt;span class="nf">vdisk&lt;/span> &lt;span class="nf">file=&amp;#34;G:\WSL\Ubuntu\ext4.vhdx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DiskPart&lt;/span> &lt;span class="nf">successfully&lt;/span> &lt;span class="nf">selected&lt;/span> &lt;span class="nf">the&lt;/span> &lt;span class="nf">virtual&lt;/span> &lt;span class="nf">disk&lt;/span> &lt;span class="nf">file.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DISKPART&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">attach&lt;/span> &lt;span class="nf">vdisk&lt;/span> &lt;span class="nf">readonly&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">100&lt;/span> &lt;span class="nf">percent&lt;/span> &lt;span class="nf">completed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DiskPart&lt;/span> &lt;span class="nf">successfully&lt;/span> &lt;span class="nf">attached&lt;/span> &lt;span class="nf">the&lt;/span> &lt;span class="nf">virtual&lt;/span> &lt;span class="nf">disk&lt;/span> &lt;span class="nf">file.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DISKPART&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">compact&lt;/span> &lt;span class="nf">vdisk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mf">100&lt;/span> &lt;span class="nf">percent&lt;/span> &lt;span class="nf">completed&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DiskPart&lt;/span> &lt;span class="nf">successfully&lt;/span> &lt;span class="nf">compacted&lt;/span> &lt;span class="nf">the&lt;/span> &lt;span class="nf">virtual&lt;/span> &lt;span class="nf">disk&lt;/span> &lt;span class="nf">file.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DISKPART&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">detach&lt;/span> &lt;span class="nf">vdisk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DiskPart&lt;/span> &lt;span class="nf">successfully&lt;/span> &lt;span class="nf">detached&lt;/span> &lt;span class="nf">the&lt;/span> &lt;span class="nf">virtual&lt;/span> &lt;span class="nf">disk&lt;/span> &lt;span class="nf">file.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DISKPART&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">exit&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Leaving&lt;/span> &lt;span class="nf">DiskPart...&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4>使用 Optimize-VHD&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Optimize-VHD&lt;/span> &lt;span class="nf">-Path&lt;/span> &lt;span class="nf">&amp;#34;G:\WSL\Ubuntu\ext4.vhdx&amp;#34;&lt;/span> &lt;span class="nf">-Mode&lt;/span> &lt;span class="nf">Full&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
+&lt;p>Happy coding!&lt;/p></content><category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧"/><category scheme="https://jjyyblahblah.xyz/tags/wsl/" term="WSL" label="WSL"/><category scheme="https://jjyyblahblah.xyz/tags/wsl2/" term="WSL2" label="WSL2"/><category scheme="https://jjyyblahblah.xyz/tags/%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98/" term="虚拟磁盘" label="虚拟磁盘"/><category scheme="https://jjyyblahblah.xyz/tags/%E7%A3%81%E7%9B%98%E6%B8%85%E7%90%86/" term="磁盘清理" label="磁盘清理"/><category scheme="https://jjyyblahblah.xyz/tags/%E7%A3%81%E7%9B%98%E5%8E%8B%E7%BC%A9/" term="磁盘压缩" label="磁盘压缩"/></entry><entry><title type="text">Python 中的方法注入</title><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post7/"/><id>https://jjyyblahblah.xyz/posts/post7/</id><updated>2026-08-09T10:51:42+08:00</updated><published>2026-08-09T09:55:49+08:00</published><author><name>Jiajun</name><uri>https://ofjiajun.github.io/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p></summary><content type="html">&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p>
 &lt;p>下面是一些常见的方法注入写法：&lt;/p>
 &lt;hr>
 &lt;h2>一、给&lt;strong>类&lt;/strong>注入方法&lt;/h2>
