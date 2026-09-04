@@ -1,4 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jiajun's Blah Blah</title><link>https://jjyyblahblah.xyz/</link><description>This is Jiajun's Blog.</description><generator>Hugo 0.145.0 https://gohugo.io/</generator><language>zh-CN</language><managingEditor>ofjiajun@gmail.com (Jiajun)</managingEditor><webMaster>ofjiajun@gmail.com (Jiajun)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><lastBuildDate>Fri, 14 Aug 2026 17:11:12 +0800</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://jjyyblahblah.xyz/rss.xml"/><item><title>WSL 虚拟磁盘（ext4.vhdx） 的迁移与压缩</title><link>https://jjyyblahblah.xyz/posts/post8/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post8/</guid><pubDate>Fri, 14 Aug 2026 15:52:15 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>WSL2 的整个 Linux 系统（包括代码、环境、数据等）都存储在一个名为 ext4.vhdx 的虚拟硬盘文件中。
+<?xml version="1.0" encoding="utf-8"?><rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>Jiajun's Blah Blah</title><link>https://jjyyblahblah.xyz/</link><description>This is Jiajun's Blog.</description><generator>Hugo 0.145.0 https://gohugo.io/</generator><language>zh-CN</language><managingEditor>ofjiajun@gmail.com (Jiajun)</managingEditor><webMaster>ofjiajun@gmail.com (Jiajun)</webMaster><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><lastBuildDate>Fri, 04 Sep 2026 16:00:35 +0800</lastBuildDate><atom:link rel="self" type="application/rss+xml" href="https://jjyyblahblah.xyz/rss.xml"/><item><title>在 .NET MAUI 中引入 Bass.Net</title><link>https://jjyyblahblah.xyz/posts/post10/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post10/</guid><pubDate>Sun, 16 Aug 2026 10:43:28 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>抄一段介绍：&lt;/p>
+&lt;blockquote>
+&lt;p>.NET Multi-platform App UI (.NET MAUI) is a cross-platform framework designed for creating native mobile and desktop applications using C# and XAML. It allows developers to build applications that can run on Android, iOS, macOS, and Windows from a single shared codebase.&lt;/p>&lt;/blockquote>
+&lt;p>Bass.Net 是著名的 audio library Bass 的 .Net 封装。&lt;/p>
+&lt;p>Bass.Net 底层使用 p/invoke 导出 Bass 的 C 函数，但它并不包含 Bass 本地库文件。因此，这项配置的主要任务是使得 Bass.Net 能够找到我们的本地库文件 bass.dll 或者 bass.so 。&lt;/p>
+&lt;p>同时，如果有必要通过 p/invoke 绑定自己的 native library ，这些配置也同样适用。&lt;/p>
+&lt;p>如何集成本地库，即 dll 和 so 文件到项目中实际上是一个约定配置。比如，文件该放哪儿，叫什么，有哪些设置必须做。&lt;/p>
+&lt;p>虽然 .NET MAUI 是好多个平台的框架，但实践中只使用了 Windows 和 Android ，所以其他平台的部分略过，但猜想彼此有共通之处。&lt;/p>
+&lt;h2>1. 考虑本地库的位置&lt;/h2>
+&lt;p>对于 Windows 平台，将 dll 直接置于项目根目录，并修改项目文件，将之复制到输出目录即可：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-csproj" data-lang="csproj">&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!-- Include bass.dll only for Windows platform --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;ItemGroup&lt;/span> &lt;span class="na">Condition=&lt;/span>&lt;span class="s">&amp;#34;&amp;#39;$(TargetFramework)&amp;#39; == &amp;#39;net8.0-windows10.0.19041.0&amp;#39;&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;None&lt;/span> &lt;span class="na">Update=&lt;/span>&lt;span class="s">&amp;#34;bass.dll&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;CopyToOutputDirectory&amp;gt;&lt;/span>Always&lt;span class="nt">&amp;lt;/CopyToOutputDirectory&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/None&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/ItemGroup&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>对于 Android 平台，不同的框架需要分门别类。以 Bass 为例，将 特定于框架的 so 文件放在&lt;br>
+*Platforms\Android\libs* 路径下，并在项目文件中包含它们：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-csproj" data-lang="csproj">&lt;span class="line">&lt;span class="cl">&lt;span class="c">&amp;lt;!-- Include bass.so for Android --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;ItemGroup&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;AndroidNativeLibrary&lt;/span> &lt;span class="na">Include=&lt;/span>&lt;span class="s">&amp;#34;Platforms\Android\libs\arm64-v8a\libbass.so&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;AndroidNativeLibrary&lt;/span> &lt;span class="na">Include=&lt;/span>&lt;span class="s">&amp;#34;Platforms\Android\libs\armeabi-v7a\libbass.so&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;AndroidNativeLibrary&lt;/span> &lt;span class="na">Include=&lt;/span>&lt;span class="s">&amp;#34;Platforms\Android\libs\x86\libbass.so&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;AndroidNativeLibrary&lt;/span> &lt;span class="na">Include=&lt;/span>&lt;span class="s">&amp;#34;Platforms\Android\libs\x86_64\libbass.so&amp;#34;&lt;/span> &lt;span class="nt">/&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/ItemGroup&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>注意本地库的文件名，需要在文件前含有 &amp;quot;lib&amp;quot; 前缀，否则 debug 配置可以载入本地库， release 则会报找不到本地库的错误。比如：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-txt" data-lang="txt">&lt;span class="line">&lt;span class="cl">Platforms/Android/libs/x86_64/libbass.so
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Platforms/Android/libs/arm64-v8a/libbass.so
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2>2. 注意 Debug 和 Release 配置的差异&lt;/h2>
+&lt;p>这里主要说的是 Android 部分：&lt;/p>
+&lt;p>提到的这些选项可以在，项目属性 -&amp;gt; android -&amp;gt; optional 下找到。&lt;/p>
+&lt;ol>
+&lt;li>Debug configuration 启用 fast deploy 禁用 aot&lt;/li>
+&lt;li>Release configuration 禁用 fast deploy 启用 aot&lt;/li>
+&lt;/ol>
+&lt;p>最后，愉快的 Coding吧。&lt;/p></description><category domain="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category><category domain="https://jjyyblahblah.xyz/tags/.net-maui/">.NET MAUI</category><category domain="https://jjyyblahblah.xyz/tags/bass.net/">Bass.Net</category><category domain="https://jjyyblahblah.xyz/tags/native-library/">native library</category><category domain="https://jjyyblahblah.xyz/tags/dll/">dll</category><category domain="https://jjyyblahblah.xyz/tags/so/">so</category></item><item><title>思维与先于思维的</title><link>https://jjyyblahblah.xyz/posts/post9/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post9/</guid><pubDate>Sat, 15 Aug 2026 22:18:34 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>许多观点认为，智识往往与语言有关，思维不能脱离语言而存在，无法借助语言就没有实际的思维，语言即便不是思维的全部，至少也是思维的必要条件。&lt;/p>
+&lt;p>这是一种可疑的直觉。&lt;/p>
+&lt;p>这篇文章试图探究一种思维固有的模式或过程，它是待表达的，换言之，它先于语言。&lt;/p>
+&lt;hr>
+&lt;p>解决数学问题时常常有一种直觉，通过这种直觉，解题者在不明确解题过程的时候可以明悟问题的答案。在这样的场景中，结论不是通过术语符号，从前提中推导而出的；过程的表述，到可能是结论反推得到的。&lt;/p>
+&lt;p>这说明，语言的努力试图靠近一种非语言的思维形式。它不同于词汇/概念的清晰明了，却有特别的坚韧，稳固，不可动摇。&lt;/p>
+&lt;hr>
+&lt;p>人们无需文字就能理解图形的空间关系，并且能够在思维中操作这些图形关系，从而产生新的理解。设想这样一种场景，一个个体经验到桌面上有两个杯子，左边的杯子里是可乐，而右边的杯子里是果汁。如果随意取用这些资源得到许可，当这人渴望可乐的感官刺激时，不太可能会伸手去够果汁，除非存在延迟满足需求的理由。&lt;/p>
+&lt;p>无论如何，这些互动，不需要通过语言的思维运作。如果人们有需求，并可以做出这些活动，那么自然而然，这些行为就会不经语言思考而被表现出来。但绝不能说这些活动的背后是无私为的，因为的确有某种意识活动，它决定了人们采取这样的行为而不是那样的行为。&lt;/p>
+&lt;hr>
+&lt;p>存在这样一种过程不意味着说，这一种过程与语言习得之间不存在关联。考虑到时间的维度，非语言思维的发展可能大大仰赖语言的协助。&lt;/p>
+&lt;p>一堆零散的经验只是一堆零散的感觉信息。思维就像屏幕空间，意识中只能呈现有限的信息，哪怕背后跑动着千万行内核代码，时间上一刻不停的刷新。&lt;/p>
+&lt;p>饥饿、口渴这些与生存息息相关的念头或许清晰且明确，但饿了想吃什么，渴了想喝什么这类念头却可能千头万绪。问“什么”意味着选择，而选择被认知所承载，认知是综合，不是分析。甜酸苦辣咸寒热温凉湿的信号可以被分别经验，但使得一个具有特定物理性质，可以提供特定感官经验的实体坍缩为一个明确的认识的途径，通过语言，具有极高的效率。&lt;/p>
+&lt;p>对经验进行概括，一系列的经验的总和行程一种认识，这就是通常指称的&lt;strong>概念&lt;/strong>。思维可以行程这种“概念”，也可以行程那种“概念”，如果只有两个，彼此之间泾渭分明，如果有一千个，数据就会“溢出屏幕”。而语言不只是命名，更擅长层层抽象。根据气味、感觉、味道，一组液体的经验可以叫做可乐，一千组液体的经验就可以统称为饮料。桌子上放不下一千个瓶子，但放得下饮品菜单。思维无法同时提取一千组饮品经验，但思维可以在阅览菜单的同时回忆，甚至想象某种品类的质感。这让思维操作大规模数据成为可能。&lt;/p>
+&lt;p>以上分析表明：&lt;/p>
+&lt;ul>
+&lt;li>在独立模块的角度，思维封装了特定的几种行为，而语言提供了进行抽象的能力。&lt;/li>
+&lt;li>在交互的角度，语言抽象促进了行为的组合，使得简单的行为可以处理复杂的任务。&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>语言的抽象用途在个体自身，是协助思维的工具，而在个体之间，就是协助传递信息的工具。相似的生活环境给予个体相似的刺激经验，这是传递语言信号能在彼此之间行程共识的基础。&lt;/p>
+&lt;p>具有实质内容的语言符号其本质是庞大的经验数据。驱动这些语言符号，就是驱动这些数据。这就是为什么个人的经验有限，而通过语言，个人却能取得超越主体经验的认识的原因。这些认知，最终都将融入个体思维能力的行程过程，成为主体意识的养料。&lt;/p>
+&lt;p>尽管没有语言也会有思维活动，但学会驱使语言的思维实现了抽象力的发展。语言以它独特的方式实现了对原始思维的教化，以至于思维会有一种错觉，语言才是他的实质的全部真理。&lt;/p>
+&lt;p>然而错觉终究是错觉，思维的实质与思维的抽象之间不存在无损耗的信息交换，这不难解释。&lt;/p>
+&lt;p>相似的经验只能带来相对的共识，而不是事实本身。这受限于个体的感官天赋，思维处理以及生活体验的差别。而接收未经个体亲身经验的语言材料高度依赖想象和联想，此二者的思维基础仍然电机于思维主体的先天禀赋和后天体验。这也就是说，即便采取同样的语言处理过程， A 个体与 B 个体的结论在实质上也必然存在相当的差异：能够说明这种现象的例子比比皆是。同样的文本在人生的两个阶段阅读，体会往往不同；一千个读者看出一千个哈姆雷特，自然也不慎稀奇。&lt;/p>
+&lt;p>需要指出的是，这种差异性同时也带来了创造性。由于信息的处理和传导是有损的，导致同样的信息在不同个体那里呈现出不同的表现形式。如果以此作为后续处理的基础，差异在随后的处理流程中不断放大，在特定时间点终将与原有的基础信息分道扬镳，别出一路，从而完成数据的在生产。所谓书读百遍，其义自见，正是明证。&lt;/p></description><category domain="https://jjyyblahblah.xyz/categories/%E7%A2%8E%E5%8F%A5%E4%B8%8E%E7%9F%AD%E7%AB%A0/">碎句与短章</category><category domain="https://jjyyblahblah.xyz/tags/%E6%80%9D%E7%BB%B4/">思维</category><category domain="https://jjyyblahblah.xyz/tags/%E8%AF%AD%E8%A8%80/">语言</category><category domain="https://jjyyblahblah.xyz/tags/%E7%9B%B4%E8%A7%89/">直觉</category><category domain="https://jjyyblahblah.xyz/tags/%E6%A6%82%E5%BF%B5/">概念</category><category domain="https://jjyyblahblah.xyz/tags/%E8%AE%A4%E7%9F%A5/">认知</category></item><item><title>WSL 虚拟磁盘（ext4.vhdx） 的迁移与压缩</title><link>https://jjyyblahblah.xyz/posts/post8/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post8/</guid><pubDate>Fri, 14 Aug 2026 15:52:15 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>WSL2 的整个 Linux 系统（包括代码、环境、数据等）都存储在一个名为 ext4.vhdx 的虚拟硬盘文件中。
 该文件一般位于 &lt;code>%localappdata%\Packages&lt;/code> 目录下的某个文件夹中，具体取决于发行版比如
 &lt;code>%localappdata%\Packages\CanonicalGroupLimited.Ubuntu24.04LTS_79rhkp1fndgsc\LocalState&lt;/code>&lt;/p>
 &lt;p>这个文件采用的是“动态扩展”机制，初始体积很小，但随着用户在 Linux 中不断写入数据，它会自动扩容。然而，它不会自动收缩。&lt;/p>
@@ -110,7 +170,7 @@
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">DISKPART&lt;/span>&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">exit&lt;/span>
 &lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Leaving&lt;/span> &lt;span class="nf">DiskPart...&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4>使用 Optimize-VHD&lt;/h4>
-&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="nf">Optimize-VHD&lt;/span> &lt;span class="nf">-Path&lt;/span> &lt;span class="nf">&amp;#34;G:\WSL\Ubuntu\ext4.vhdx&amp;#34;&lt;/span> &lt;span class="nf">-Mode&lt;/span> &lt;span class="nf">Full&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-ps" data-lang="ps">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;gt;&lt;/span> &lt;span class="nf">Optimize-VHD&lt;/span> &lt;span class="nf">-Path&lt;/span> &lt;span class="nf">&amp;#34;G:\WSL\Ubuntu\ext4.vhdx&amp;#34;&lt;/span> &lt;span class="nf">-Mode&lt;/span> &lt;span class="nf">Full&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
 &lt;p>Happy coding!&lt;/p></description><category domain="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/">奇技与淫巧</category><category domain="https://jjyyblahblah.xyz/tags/wsl/">WSL</category><category domain="https://jjyyblahblah.xyz/tags/wsl2/">WSL2</category><category domain="https://jjyyblahblah.xyz/tags/%E8%99%9A%E6%8B%9F%E7%A3%81%E7%9B%98/">虚拟磁盘</category><category domain="https://jjyyblahblah.xyz/tags/%E7%A3%81%E7%9B%98%E6%B8%85%E7%90%86/">磁盘清理</category><category domain="https://jjyyblahblah.xyz/tags/%E7%A3%81%E7%9B%98%E5%8E%8B%E7%BC%A9/">磁盘压缩</category></item><item><title>Python 中的方法注入</title><link>https://jjyyblahblah.xyz/posts/post7/</link><guid isPermaLink="true">https://jjyyblahblah.xyz/posts/post7/</guid><pubDate>Sun, 09 Aug 2026 09:55:49 +0800</pubDate><author>ofjiajun@gmail.com (Jiajun)</author><copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright><description>&lt;p>在 Python 中，“方法注入”通常指的是在运行时将一个函数（方法）动态地绑定到一个类或实例上，使其成为该类或实例的一个方法。这其实就是一种“猴子补丁（monkey patching）”的形式。&lt;/p>
 &lt;p>下面是一些常见的方法注入写法：&lt;/p>
