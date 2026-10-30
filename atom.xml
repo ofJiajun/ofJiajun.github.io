@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">Jiajun's Blah Blah</title><subtitle type="html">This is Jiajun's Blog.</subtitle><updated>2026-09-30T09:09:56+08:00</updated><id>https://jjyyblahblah.xyz/</id><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/"/><link rel="self" type="application/atom+xml" href="https://jjyyblahblah.xyz/atom.xml"/><author><name>Jiajun</name><uri>https://jjyyblahblah.xyz/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator><entry><title type="text">在 WSL2 中配置内网穿透工具 Cloudflare Tunnel</title><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post11/"/><id>https://jjyyblahblah.xyz/posts/post11/</id><updated>2026-09-30T09:08:38+08:00</updated><published>2026-09-28T17:02:03+08:00</published><author><name>Jiajun</name><uri>https://ofjiajun.github.io/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p>Cloudflare Tunnel（原名 Argo Tunnel），是一个非常流行的内网穿透（反向代理）工具。&lt;/p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN"><title type="text">Jiajun's Blah Blah</title><subtitle type="html">This is Jiajun's Blog.</subtitle><updated>2026-10-30T15:23:37+08:00</updated><id>https://jjyyblahblah.xyz/</id><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/"/><link rel="self" type="application/atom+xml" href="https://jjyyblahblah.xyz/atom.xml"/><author><name>Jiajun</name><uri>https://jjyyblahblah.xyz/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><generator uri="https://gohugo.io/" version="0.145.0">Hugo</generator><entry><title type="text">配置 Kiwix Server ，实现离线访问维基百科</title><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post12/"/><id>https://jjyyblahblah.xyz/posts/post12/</id><updated>2026-10-30T15:23:03+08:00</updated><published>2026-10-30T15:10:52+08:00</published><author><name>Jiajun</name><uri>https://ofjiajun.github.io/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p>Kiwix 是一个离线访问网络内容的工具。作为应用程序，它可以运行在包括&lt;br>
+Android, Linux, Mac OS, iOS 和 Windows 等多个平台上。同时也可以作为 Chrome, Firefox 和 Edge 等浏览器的扩展。&lt;/p></summary><content type="html">&lt;p>Kiwix 是一个离线访问网络内容的工具。作为应用程序，它可以运行在包括&lt;br>
+Android, Linux, Mac OS, iOS 和 Windows 等多个平台上。同时也可以作为 Chrome, Firefox 和 Edge 等浏览器的扩展。&lt;/p>
+&lt;p>程序是内容的入口， Kiwix 访问的内容是一系列存储在后缀为 &lt;em>.zim&lt;/em> 的文件中的数据。所以，通常 Kiwix 的使用方式是，首先下载所需平台的 Kiwix 应用程序。地址为&lt;br>
+&lt;a href="https://kiwix.org/en/applications/" target="_blank" rel="noopener">https://kiwix.org/en/applications/&lt;/a>&lt;br>
+然后根据需求下载对应的 zim 数据文件。具体可以访问&lt;br>
+&lt;a href="https://library.kiwix.org/#lang=eng" target="_blank" rel="noopener">Kiwix 的图书馆页面&lt;/a>&lt;br>
+该页面收集了丰富的知识内容，如维基项目、古腾堡项目等等，可根据语言和项目类别进行筛选，按需下载。&lt;/p>
+&lt;p>屏幕阅读器用户特别推荐使用 Chrome 插件 &lt;strong>Kiwix&lt;/strong> 进行操作，个人体验近似于通过服务器程序共享的网页前端。&lt;/p>
+&lt;p>除此之外， Kiwix 提供了一个工具，可以将知识库共享给同一网络环境中的其他设备。该工具一般是随应用分发的，也有其独立版本。只需简单配置，我们就可以在局域网内搭建一个离线的百科查询服务。使用这种方式有几个好处：&lt;/p>
+&lt;ol>
+&lt;li>发起服务的设备负责存储知识内容，减少冗余备份；&lt;/li>
+&lt;li>同一网络下的设备无需特别安装 Kiwix 应用，只要通过设备中的浏览器就可以查询数据；&lt;/li>
+&lt;li>相比于桌面版的 Kiwix ，网页版会给辅助技术，如 NVDA ，提供更友好的使用体验，至少在 Windows 上是这样。&lt;/li>
+&lt;/ol>
+&lt;p>接下来就谈谈，不使用 Kiwix 应用，如何配置一个可以让内网设备直接通过浏览器访问的 Kiwix 离线数据查询服务。&lt;/p>
+&lt;hr>
+&lt;h3>下载 Kiwix Server&lt;/h3>
+&lt;p>以 Windows 平台为例。浏览器访问&lt;br>
+&lt;a href="https://kiwix.org/en/applications/" target="_blank" rel="noopener">Kiwix 应用下载页&lt;/a>&lt;/p>
+&lt;p>如果使用 NVDA 屏幕阅读器，可以通过点击字母 H 快速在网页的标题之间跳转。&lt;/p>
+&lt;p>靠前的是各个平台的 Kiwix 应用程序，它们不是本文的目标，因此可以一掠而过，直到&lt;br>
+&lt;strong>Kiwix Server&lt;/strong> 的部分。&lt;br>
+自此处往下，找到 Windows 版本的超链接&lt;br>
+&lt;strong>Windows X86 64 bits binaries&lt;/strong> ，点击下载即可。&lt;/p>
+&lt;p>将下载回来的压缩包解压，可以获得三个文件：&lt;/p>
+&lt;ul>
+&lt;li>kiwix-manage.exe： 用于管理离线图书馆，也就是 zim 文件&lt;/li>
+&lt;li>kiwix-search.exe： 一个命令形搜索程序，这篇文章中用不到&lt;/li>
+&lt;li>kiwix-serve.exe： Kiwix 服务器的主进程&lt;/li>
+&lt;/ul>
+&lt;p>它们都是命令行程序，所以后续步骤涉及一些需要在终端中进行的操作。&lt;/p>
+&lt;h3>配置离线图书馆&lt;/h3>
+&lt;p>主要是两步，第一，添加我们想要的 zim 文件，第二，载入 zim 文件并启动服务。&lt;/p>
+&lt;p>zim 文件的下载页在&lt;a href="https://jjyyblahblah.xyz/posts/post12/#%E5%89%8D%E8%A8%80">前言&lt;/a>中有提到，这里不再赘述。&lt;/p>
+&lt;p>新建一个文件夹，叫什么都好，统一存放下载回来的 zim 文件，比如我在 E 盘下新建了一个名为 wiki 的文件夹。。&lt;/p>
+&lt;p>接下来，打开前一节解压的 Kiwix 工具所在的目录，在该目录下按下 Alt + D ，键入 &lt;code>cmd&lt;/code> ，然后回车。鹧将在当前路径下打开命令提示符。&lt;/p>
+&lt;p>在命令提示符下进行的第一项操作是创建图书馆配置，指令为：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="line">&lt;span class="cl">kiwix-manage library.xml add library.zim
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>指令中的 &lt;code>kiwix-manage&lt;/code> 即我们在上一节中提到的用于管理 zim 文件的程序；其后的第一个参数为图书馆配置的路径；然后是 &lt;code>add&lt;/code> 这代表添加 zim 文件；最后是 zim 文件的路径。比如&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="line">&lt;span class="cl">kiwix-manage e:\wiki\library.xml add e:\wiki\wikibooks_en_all_maxi_2021-03.zim
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>该指令表示在 E 盘的 wiki 文件夹中查找 library.xml 配置文件，如果没有就创建一个，然后将同一目录中的一个存储 Wikibooks 的 zim 数据文件添加到配置文件中。&lt;/p>
+&lt;p>如果该操作成功执行，打开 E 盘下的 wiki 文件夹，应该可以找到一个名为 &lt;code>library.xml&lt;/code> 的文件。其内容应该与下面样例相似：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;library&lt;/span> &lt;span class="na">version=&lt;/span>&lt;span class="s">&amp;#34;20110515&amp;#34;&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c">&amp;lt;!-- 叽里呱啦一大堆，字数太多，不贴了 --&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/library&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>添加多个 zim 文件可以照此进行，如：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-cmd" data-lang="cmd">&lt;span class="line">&lt;span class="cl">kiwix-manage e:\wiki\library.xml add 1.zim
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kiwix-manage e:\wiki\library.xml add 2.zim
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kiwix-manage e:\wiki\library.xml add 3.zim
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>现在，载入这个 library.xml 即可启动 Kiwix 服务，指令如下：&lt;/p>
+&lt;pre tabindex="0">&lt;code>kiwix-serve --library e:\wiki\library.xml
+&lt;/code>&lt;/pre>&lt;p>&lt;code>kiwix-serve&lt;/code> 是 Kiwix 服务器主程序，其后的选项 &lt;code>--library&lt;/code> 需要我们给出一个 library.xml 配置的路径作为参数。这里将刚才创建的 &lt;code>e:\wiki\library.xml&lt;/code> 作为其参数。回车之后，输出应类似下面的内容：&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-output" data-lang="output">Loading the library from the following files:
+e:\wiki\library.xml
+The library was successfully loaded.
+The Kiwix server is running and can be accessed in the local network at: http://192.168.2.110:80
+&lt;/code>&lt;/pre>&lt;p>注意最后一行的地址&lt;br>
+&lt;strong>&lt;a href="http://192.168.2.110:80" target="_blank" rel="noopener">http://192.168.2.110:80&lt;/a>&lt;/strong>&lt;br>
+这就是局域网内其他设备用于访问 Kiwix 服务的地址。&lt;/p>
+&lt;p>此时，打开浏览器然后输入该地址，即可访问 Kiwix 服务页面，预览和查询本地图书馆内存储的数据。&lt;/p>
+&lt;h3>一点小改进&lt;/h3>
+&lt;p>直接在命令提示符中运行服务要求我们维持命令提示符的打开状态，否则 Kiwix Server 就会罢工。所以我们需要让 Kiwix Server 转到后台默默奉献。&lt;/p>
+&lt;p>操作如下。&lt;/p>
+&lt;p>新建一个文本文档，然后，将以下内容填入该文本文档&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bat" data-lang="bat">&lt;span class="line">&lt;span class="cl">&lt;span class="p">@&lt;/span>&lt;span class="k">echo&lt;/span> off
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">%1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="s2">&amp;#34;h&amp;#34;&lt;/span> &lt;span class="k">goto&lt;/span> &lt;span class="nl">begin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">start&lt;/span> mshta vbscript:createobject(&lt;span class="s2">&amp;#34;wscript.shell&amp;#34;&lt;/span>).run(&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>&lt;span class="nv">%~nx0&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34; h&amp;#34;&lt;/span>,0)(window.close)&lt;span class="p">&amp;amp;&amp;amp;&lt;/span>&lt;span class="k">exit&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">:&lt;/span>&lt;span class="nl">begin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kiwix-serve --library e:\wiki\library.xml &lt;span class="p">&amp;gt;&lt;/span> ./output.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>微调最后一行，将其中的 &lt;code>e:\wiki\library.xml&lt;/code> 改为你的 library.xml 的路径。&lt;/p>
+&lt;p>完成修改后保存文件。将文本文件的后缀名从 &lt;code>.txt&lt;/code> 改为 &lt;code>.bat&lt;/code> 。&lt;/p>
+&lt;p>现在，只要双击或回车运行该 bat 文件就可以后台启动一个 Kiwix 服务，同时，在 该 bat 文件所在的目录下会生成一个 &lt;code>output.txt&lt;/code> 文件，其中保存了指令执行后的输出信息。如果忘记了访问服务的 http 地址，可以到输出文件中查看。&lt;/p>
+&lt;p>End.&lt;/p></content><category scheme="https://jjyyblahblah.xyz/categories/%E5%A5%87%E6%8A%80%E4%B8%8E%E6%B7%AB%E5%B7%A7/" term="奇技与淫巧" label="奇技与淫巧"/><category scheme="https://jjyyblahblah.xyz/tags/kiwix/" term="Kiwix" label="Kiwix"/><category scheme="https://jjyyblahblah.xyz/tags/%E7%A6%BB%E7%BA%BF%E7%9F%A5%E8%AF%86%E5%BA%93/" term="离线知识库" label="离线知识库"/><category scheme="https://jjyyblahblah.xyz/tags/%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91/" term="维基百科" label="维基百科"/><category scheme="https://jjyyblahblah.xyz/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D%E9%98%85%E8%AF%BB/" term="无障碍阅读" label="无障碍阅读"/></entry><entry><title type="text">在 WSL2 中配置内网穿透工具 Cloudflare Tunnel</title><link rel="alternate" type="text/html" href="https://jjyyblahblah.xyz/posts/post11/"/><id>https://jjyyblahblah.xyz/posts/post11/</id><updated>2026-09-30T09:08:38+08:00</updated><published>2026-09-28T17:02:03+08:00</published><author><name>Jiajun</name><uri>https://ofjiajun.github.io/</uri><email>ofjiajun@gmail.com</email></author><rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html">&lt;p>Cloudflare Tunnel（原名 Argo Tunnel），是一个非常流行的内网穿透（反向代理）工具。&lt;/p>
 &lt;p>它的核心机制是：在你的本地机器或内网服务器上安装一个轻量级客户端 cloudflared，由它主动向 Cloudflare 的全球边缘网络发起加密连接，建立一条持久隧道。当外部用户访问你绑定的域名时，流量会先到达 Cloudflare 节点，再通过这条隧道安全地转发到你本地的服务。&lt;/p></summary><content type="html">&lt;p>Cloudflare Tunnel（原名 Argo Tunnel），是一个非常流行的内网穿透（反向代理）工具。&lt;/p>
 &lt;p>它的核心机制是：在你的本地机器或内网服务器上安装一个轻量级客户端 cloudflared，由它主动向 Cloudflare 的全球边缘网络发起加密连接，建立一条持久隧道。当外部用户访问你绑定的域名时，流量会先到达 Cloudflare 节点，再通过这条隧道安全地转发到你本地的服务。&lt;/p>
 &lt;h3>环境准备&lt;/h3>
